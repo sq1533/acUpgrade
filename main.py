@@ -1,15 +1,14 @@
 import uvicorn
 from fastapi import FastAPI,Request
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import database
 
 app = FastAPI()
 
-# HTML 템플릿을 위한 디렉토리 설정
-templates = Jinja2Templates(directory=".")
+# 현재 파일의 디렉토리 경로를 가져옵니다.
+templates = Jinja2Templates(directory="templates")
 #데이터 설정
 class mk(BaseModel):
     mid : str

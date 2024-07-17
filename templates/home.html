@@ -1,11 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>알람 및 설명 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .alarm-section {
+            background-color: #f8f8f8;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .code-box {
+            background-color: #e8e8e8;
+            padding: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .description-section {
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            border: 0;
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="alarm-section" id="alarm-container"hx-get="/get-latest-alarm"hx-trigger="load, every 2s">
+            <button class="copy-btn">복사</button>
+        </div>
+        <div class="description-section">
+            <p>URL:</p>
+            <p>20000519 확인필요</p>
+            <p>DBM 페이지 가맹점 사이트, 서비스, 담당자 정보 생성</p>
+        </div>
+        <hr class="divider">
+        <div class="alarm-section">
+            <pre class="code-box"><code>[AI_MON:가맹점 - 3sjva38]</code></pre>
+            <button class="copy-btn">복사</button>
+        </div>
+        <div class="description-section">
+            <p>• 가맹점: 크림 [M2194282]</p>
+            <p>• 담당자: 이성준</p>
+            <p>• 서비스: 간편결제(차세대)</p>
+            <p>• 가맹점명: 재잘프름오엘[RE]</p>
+            <p>• 최근 5분간 가맹없음! (평상시 가맹없음 건수: 2분)</p>
+            <p>• 알람일시: 07/17 09:56</p>
+            <p>• 실시간 상황 URL링크: http://61.252.169.94:8080/t.jsp?key=3sjva38</p>
+        </div>
+    </div>
 </body>
 </html>
