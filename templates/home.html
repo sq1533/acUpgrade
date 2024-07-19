@@ -66,28 +66,10 @@
 </head>
 <body>
     <div class="container">
-        <div class="alarm-section" id="alarm-container"hx-get="/alarm_1_a"hx-trigger="load, every 2s">
-            <button class="copy-btn">복사</button>
-        </div>
-        <div class="description-section">
-            <p>URL:<div hx-get="/alarm_1_u"hx-trigger="load, every 2s"></div></p>
-            <p>20000519 확인필요</p>
-            <p>DBM 페이지 가맹점 사이트, 서비스, 담당자 정보 생성</p>
-        </div>
+        <div class="alarm-section" id="alarm-container" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
+        <div class="description-section"hx-get="/alarm_1_info" hx-trigger="load, every 2s"></div>
+        <div class="description-section"hx-get="/alarm_1_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
-        <div class="alarm-section">
-            <pre class="code-box"><code>[AI_MON:가맹점 - 3sjva38]</code></pre>
-            <button class="copy-btn">복사</button>
-        </div>
-        <div class="description-section">
-            <p>• 가맹점: 크림 [M2194282]</p>
-            <p>• 담당자: 이성준</p>
-            <p>• 서비스: 간편결제(차세대)</p>
-            <p>• 가맹점명: 재잘프름오엘[RE]</p>
-            <p>• 최근 5분간 가맹없음! (평상시 가맹없음 건수: 2분)</p>
-            <p>• 알람일시: 07/17 09:56</p>
-            <p>• 실시간 상황 URL링크: http://61.252.169.94:8080/t.jsp?key=3sjva38</p>
-        </div>
     </div>
 </body>
 </html>

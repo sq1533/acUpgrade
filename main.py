@@ -4,30 +4,38 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import pandas as pd
+import re
 import database
 
 app = FastAPI()
 #현재 파일의 디렉토리 경로를 가져옵니다.
 templates = Jinja2Templates(directory="templates")
-
+#info데이터 로드
+info = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\info_.json",orient="records",dtype={"mid":str,"info":str,"char":str})
 #homePage
 @app.get("/home",response_class=HTMLResponse)
 async def home(request:Request):
     return templates.TemplateResponse("home.html",{"request":request})
-#알람 데이터 읽어오기
-alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-@app.get("/alarm_1_a")
-async def alarm_1():
-    alarmR = alarm.tail(10).iloc[::-1]
-    return alarmR.loc["Alarm"]
-@app.get("/alarm_1_u")
-async def alarm_1():
-    alarmR = alarm.tail(10).iloc[::-1]
-    if alarmR.loc["URL"][0] == None:
-        alarmURL = "None"
-    else:
-        alarmURL = str(alarmR.loc["URL"][0])
-    return alarmURL
+#URL 정제
+def urls_to_links(text):
+    url = r'(https?://\S+)'
+    return re.sub(url,r'<a href="\1" target="_blank">\1</a>',text)
+#alarm 1번
+@app.get("/alarm_1")
+def alarm_1():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    links = urls_to_links(alarm.iloc[-1]['Alarm'])
+    return HTMLResponse(content=links)
+@app.get("/alarm_1_info")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-1]['mid']])]['info'].reset_index(drop=True)[0])
+    return HTMLResponse(content=midInfo)
+@app.get("/alarm_1_char")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midChar = info[info['mid'].isin([alarm.iloc[-1]['mid']])]['char'].reset_index(drop=True)[0]
+    return HTMLResponse(content=midChar)
 #데이터 설정
 class mk(BaseModel):
     mid : str
