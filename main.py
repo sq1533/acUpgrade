@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI,Request
+from fastapi import FastAPI,Request,Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -12,6 +12,7 @@ app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 #info데이터 로드
 info = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\info_.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+midList = info['mid'].tolist()
 #homePage
 @app.get("/home",response_class=HTMLResponse)
 async def home(request:Request):
@@ -35,6 +36,70 @@ def alarm_1_info():
 def alarm_1_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
     midChar = info[info['mid'].isin([alarm.iloc[-1]['mid']])]['char'].reset_index(drop=True)[0]
+    return HTMLResponse(content=midChar)
+#alarm 2번
+@app.get("/alarm_2")
+def alarm_1():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    links = urls_to_links(alarm.iloc[-2]['Alarm'])
+    return HTMLResponse(content=links)
+@app.get("/alarm_2_info")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-2]['mid']])]['info'].reset_index(drop=True)[0])
+    return HTMLResponse(content=midInfo)
+@app.get("/alarm_2_char")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midChar = info[info['mid'].isin([alarm.iloc[-2]['mid']])]['char'].reset_index(drop=True)[0]
+    return HTMLResponse(content=midChar)
+#alarm 3번
+@app.get("/alarm_3")
+def alarm_1():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    links = urls_to_links(alarm.iloc[-3]['Alarm'])
+    return HTMLResponse(content=links)
+@app.get("/alarm_3_info")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-3]['mid']])]['info'].reset_index(drop=True)[0])
+    return HTMLResponse(content=midInfo)
+@app.get("/alarm_3_char")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midChar = info[info['mid'].isin([alarm.iloc[-3]['mid']])]['char'].reset_index(drop=True)[0]
+    return HTMLResponse(content=midChar)
+#alarm 2번
+@app.get("/alarm_4")
+def alarm_1():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    links = urls_to_links(alarm.iloc[-4]['Alarm'])
+    return HTMLResponse(content=links)
+@app.get("/alarm_4_info")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-4]['mid']])]['info'].reset_index(drop=True)[0])
+    return HTMLResponse(content=midInfo)
+@app.get("/alarm_4_char")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midChar = info[info['mid'].isin([alarm.iloc[-4]['mid']])]['char'].reset_index(drop=True)[0]
+    return HTMLResponse(content=midChar)
+#alarm 2번
+@app.get("/alarm_5")
+def alarm_1():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    links = urls_to_links(alarm.iloc[-5]['Alarm'])
+    return HTMLResponse(content=links)
+@app.get("/alarm_5_info")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-5]['mid']])]['info'].reset_index(drop=True)[0])
+    return HTMLResponse(content=midInfo)
+@app.get("/alarm_5_char")
+def alarm_1_info():
+    alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    midChar = info[info['mid'].isin([alarm.iloc[-5]['mid']])]['char'].reset_index(drop=True)[0]
     return HTMLResponse(content=midChar)
 #데이터 설정
 class mk(BaseModel):
