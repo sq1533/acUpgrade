@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>알람 및 설명 페이지</title>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <style>
         body {
@@ -42,8 +41,7 @@
 
         .copy-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            right: 40px;
             padding: 5px 10px;
             background-color: #007bff;
             color: white;
@@ -66,26 +64,47 @@
 </head>
 <body>
     <div class="container">
-        <div class="alarm-section" id="alarm-container" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
+        <div class="alarm-section" id="alarm1" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
+        <button class="copy-btn" onclick="copyText('alarm1')">복사</button>
         <div class="description-section"hx-get="/alarm_1_info" hx-trigger="load, every 2s"></div>
         <div class="description-section"hx-get="/alarm_1_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
-        <div class="alarm-section" id="alarm-container" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
+        <div class="alarm-section" id="alarm2" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
+        <button class="copy-btn" onclick="copyText('alarm2')">복사</button>
         <div class="description-section"hx-get="/alarm_2_info" hx-trigger="load, every 2s"></div>
         <div class="description-section"hx-get="/alarm_2_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
-        <div class="alarm-section" id="alarm-container" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
+        <div class="alarm-section" id="alarm3" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
+        <button class="copy-btn" onclick="copyText('alarm3')">복사</button>
         <div class="description-section"hx-get="/alarm_3_info" hx-trigger="load, every 2s"></div>
         <div class="description-section"hx-get="/alarm_3_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
-        <div class="alarm-section" id="alarm-container" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
+        <div class="alarm-section" id="alarm4" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
+        <button class="copy-btn" onclick="copyText('alarm4')">복사</button>
         <div class="description-section"hx-get="/alarm_4_info" hx-trigger="load, every 2s"></div>
         <div class="description-section"hx-get="/alarm_4_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
-        <div class="alarm-section" id="alarm-container" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
+        <div class="alarm-section" id="alarm5" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
+        <button class="copy-btn" onclick="copyText('alarm5')">복사</button>
         <div class="description-section"hx-get="/alarm_5_info" hx-trigger="load, every 2s"></div>
         <div class="description-section"hx-get="/alarm_5_char" hx-trigger="load, every 2s"></div>
         <hr class="divider">
     </div>
 </body>
+    <script>
+        function copyText(elementId) {
+            // 복사할 텍스트 요소를 선택
+            var textElement = document.getElementById(elementId);
+            // 임시 텍스트 영역을 생성
+            var tempTextArea = document.createElement("textarea");
+            tempTextArea.value = textElement.innerText;
+            document.body.appendChild(tempTextArea);
+            // 텍스트 영역의 내용을 선택
+            tempTextArea.select();
+            // 복사 명령 실행
+            document.execCommand("copy");
+            // 임시 텍스트 영역 제거
+            document.body.removeChild(tempTextArea);
+        }
+    </script>
 </html>

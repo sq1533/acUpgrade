@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI,Request,Form
+from fastapi import FastAPI,Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -69,7 +69,7 @@ def alarm_1_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
     midChar = info[info['mid'].isin([alarm.iloc[-3]['mid']])]['char'].reset_index(drop=True)[0]
     return HTMLResponse(content=midChar)
-#alarm 2번
+#alarm 4번
 @app.get("/alarm_4")
 def alarm_1():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
@@ -85,7 +85,7 @@ def alarm_1_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
     midChar = info[info['mid'].isin([alarm.iloc[-4]['mid']])]['char'].reset_index(drop=True)[0]
     return HTMLResponse(content=midChar)
-#alarm 2번
+#alarm 5번
 @app.get("/alarm_5")
 def alarm_1():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
