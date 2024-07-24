@@ -5,7 +5,7 @@ from customs.custom import css
 #상단 빈칸제거 및 사이드바 제거
 st.markdown(css,unsafe_allow_html=True)
 
-url = "http://127.0.0.1:8000/home"
+url = "http://172.20.21.19:8000/home"
 
 #실시간 알람 불러오기
 def H_page():
