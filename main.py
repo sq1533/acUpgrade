@@ -18,7 +18,7 @@ async def home(request:Request):
     return templates.TemplateResponse("home.html",{"request":request})
 #URL 정제
 def urls_to_links(text):
-    url = r'(https?://\S+)'
+    url = r'(https?://[^\s<]+)'
     return re.sub(url,r'<a href="\1" target="_blank">\1</a>',text)
 #alarm 1번
 @app.get("/alarm_1")
