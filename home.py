@@ -2,7 +2,6 @@ import json
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
-from customs.custom import css
 
 url = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\login.json")["IP"]["IP"]+"/home"
 
