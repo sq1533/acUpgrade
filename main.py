@@ -32,7 +32,7 @@ def alarm_1_info():
     if alarm.iloc[-1]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-1]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = f"{alarm.iloc[-1]['mid']} DB생성 필요"
+        midInfo = str(f"{alarm.iloc[-1]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 @app.get("/alarm_1_char")
 def alarm_1_info():
@@ -54,7 +54,7 @@ def alarm_2_info():
     if alarm.iloc[-2]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-2]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = f"{alarm.iloc[-2]['mid']} DB생성 필요"
+        midInfo = str(f"{alarm.iloc[-2]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 @app.get("/alarm_2_char")
 def alarm_2_info():
@@ -76,7 +76,7 @@ def alarm_3_info():
     if alarm.iloc[-3]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-3]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = f"{alarm.iloc[-3]['mid']} DB생성 필요"
+        midInfo = str(f"{alarm.iloc[-3]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 @app.get("/alarm_3_char")
 def alarm_3_info():
@@ -98,7 +98,7 @@ def alarm_4_info():
     if alarm.iloc[-4]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-4]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = f"{alarm.iloc[-4]['mid']} DB생성 필요"
+        midInfo = str(f"{alarm.iloc[-4]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 @app.get("/alarm_4_char")
 def alarm_4_info():
@@ -120,7 +120,7 @@ def alarm_5_info():
     if alarm.iloc[-5]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-5]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = f"{alarm.iloc[-5]['mid']} DB생성 필요"
+        midInfo = str(f"{alarm.iloc[-5]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 @app.get("/alarm_5_char")
 def alarm_5_info():
