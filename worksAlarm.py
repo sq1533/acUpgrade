@@ -8,8 +8,11 @@ chrome_options.add_argument('--blink-settings=imagesEnabled=false')
 driver = webdriver.Chrome(options=chrome_options)
 from bs4 import BeautifulSoup
 import pandas as pd
-
-works_login = pd.read_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\login.json",orient='records')
+import json
+#로그인 정보 호출
+with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json','r',encoding="UTF-8") as f:
+    login = json.load(f)
+works_login = pd.Series(login['works'])
 
 #크롬 드라이버 실행
 url = "https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com%2F"
@@ -19,13 +22,13 @@ driver.implicitly_wait(1)
 id_box = driver.find_element(By.XPATH,'//input[@id="user_id"]')
 login_button_1 = driver.find_element(By.XPATH,'//button[@id="loginStart"]')
 ActionChains(driver)
-id = works_login['works']['id']
+id = works_login['id']
 ActionChains(driver).send_keys_to_element(id_box, '{}'.format(id)).click(login_button_1).perform()
 time.sleep(1)
 #로그인 정보입력(비밀번호)
 password_box = driver.find_element(By.XPATH,'//input[@id="user_pwd"]')
 login_button_2 = driver.find_element(By.XPATH,'//button[@id="loginBtn"]')
-password = works_login['works']['pw']
+password = works_login['pw']
 ActionChains(driver).send_keys_to_element(password_box, '{}'.format(password)).click(login_button_2).perform()
 time.sleep(1)
 
@@ -40,14 +43,14 @@ a_room = ["26143386","26143422","26143419","82166397","26143441","108290282","10
 
 #알람데이터 json파일 저장
 def re(x):
-    alarmJson = x.to_json("C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json",orient='records',force_ascii=False,indent=4)
+    alarmJson = x.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm_.json",orient='records',force_ascii=False,indent=4)
     new_alarm = driver.find_element(By.CLASS_NAME,'chat_list').find_element(By.CLASS_NAME,'new')
     new_alarm.click()
     driver.refresh()
     return alarmJson
 #알람데이터 크롤링
 def alarmcheck():
-    AR = pd.read_json('C:\\Users\\USER\\ve_1\\acUpgrade\\db\\Alarm_.json',orient='records',dtype={'Alarm':str,'mid':str})
+    AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm_.json',orient='records',dtype={'Alarm':str,'mid':str})
     r = len(AR)
     if r > 10:
         AR.drop([0],axis=0,inplace=True)
