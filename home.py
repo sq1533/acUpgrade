@@ -6,7 +6,7 @@ from customs.custom import css
 #상단 빈칸제거 및 사이드바 제거
 st.markdown(css,unsafe_allow_html=True)
 #데이터 불러오기
-with open('C:\\Users\\USER\\ve_1\\acUpgrade\\db\\login.json', 'r', encoding="UTF-8") as f:
+with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json', 'r', encoding="UTF-8") as f:
     login_DB = json.load(f)
 url = pd.Series(login_DB['IP'])['IP']+"/home"
 #실시간 알람 불러오기
