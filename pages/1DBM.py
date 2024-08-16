@@ -26,8 +26,8 @@ with tab1:
         char: str = st.text_area("담당자")
         mk_info = {
             "mid":mid,
-            "info":info.replace('\n','  \n'),
-            "char":char.replace('\n','  \n')
+            "info":info.replace('\n','<br>'),
+            "char":char.replace('\n','<br>')
         }
         btn_1 = st.form_submit_button(label="생성")
         if btn_1:
@@ -53,8 +53,8 @@ with tab2:
         char: str = st.text_area("담당자",midInfo.loc[midInfo['mid']==swap]['char'].tolist()[0].replace("<br>","\n"),height=100)
         mk_ch = {
             "mid":mid,
-            "info":info.replace('\n','  \n'),
-            "char":char.replace('\n','  \n')
+            "info":info.replace('\n','<br>'),
+            "char":char.replace('\n','<br>')
         }
         btn_3 = st.form_submit_button(label="수정")
         if btn_3:

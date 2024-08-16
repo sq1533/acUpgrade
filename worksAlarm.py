@@ -43,14 +43,14 @@ a_room = ["26143386","26143422","26143419","82166397","26143441","108290282","10
 
 #알람데이터 json파일 저장
 def re(x):
-    alarmJson = x.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm_.json",orient='records',force_ascii=False,indent=4)
+    alarmJson = x.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient='records',force_ascii=False,indent=4)
     new_alarm = driver.find_element(By.CLASS_NAME,'chat_list').find_element(By.CLASS_NAME,'new')
     new_alarm.click()
     driver.refresh()
     return alarmJson
 #알람데이터 크롤링
 def alarmcheck():
-    AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm_.json',orient='records',dtype={'Alarm':str,'mid':str})
+    AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
     r = len(AR)
     if r > 10:
         AR.drop([0],axis=0,inplace=True)
