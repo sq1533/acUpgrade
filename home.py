@@ -18,8 +18,8 @@ def H_page():
         mid = st.text_input("MID조회(입력 후 Enter)")
         if st.button("조회"):
             if mid in midList:
-                st.write(midInfo[midInfo['mid']==mid]['info'].values.replace("<br>","  \n"))
-                st.write(midInfo[midInfo['mid']==mid]['char'].values.replace("<br>","  \n"))
+                st.write(midInfo.loc[midInfo['mid']==mid]['info'].tolist()[0].replace("<br>","  \n"))
+                st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
             else:
                 st.write('존재하지 않는 MID입니다.')
     components.iframe(url,width=650,height=2350)
