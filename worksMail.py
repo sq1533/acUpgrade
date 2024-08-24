@@ -95,12 +95,13 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
                     "main":"test_m"
                     }
                 pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
+                requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=메일전송 성공")
                 time.sleep(1)
                 break
             except NoSuchElementException:
-                requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증실패, 재시도 요망")
                 mailReset = {"passnumber":"test","addr":"test_a","subaddr":"test_s","title":"test_t","main":"test_m"}
                 pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
+                requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증실패, 재시도 요망")
                 driver.quit()
                 time.sleep(1)
                 break
