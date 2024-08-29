@@ -15,6 +15,8 @@ def sendMail():
 with open('C:\\Users\\USER\\ve_1\\DB\\4-2mailInfo.json', 'r', encoding='utf-8') as f:
     mailInfo = json.load(f)
 coochip = pd.Series(mailInfo["쿠칩"])
+cooIndex = pd.Series(mailInfo["쿠칩제목"])
+cooRcv = pd.Series(mailInfo["쿠칩수신자"])
 recive = pd.Series(mailInfo["수신자"])
 servise = pd.Series(mailInfo["서비스"])
 bank = pd.Series(mailInfo["원천사"]["은행"])
@@ -146,13 +148,14 @@ with tab2:
     passN : str = bady1.text_input("pg_info2 인증번호", max_chars=4)
     bady1.empty()
     bady1.empty()
-    adr : str = bady2_1.text_input("수신자")
+    select_adr : str = bady2_1.selectbox("수신자",list(cooRcv.keys()))
+    adr : str = cooRcv[select_adr]
     if bady2_2.checkbox("참조자(쿠폰사업팀, 서비스관리팀)",value=True):
         subadr : str = "couchip@hecto.co.kr, mnt@hecto.co.kr"
     else:
         subadr : str = ""
-    title : str = st.text_input("제목")
-    select = st.selectbox("메일 내용 선택",list(coochip.keys()))
+    select = st.selectbox("메일 선택",list(coochip.keys()))
+    title : str = cooIndex[select]
     main : str = coochip[select]
     email = {
         "passnumber":passN,
