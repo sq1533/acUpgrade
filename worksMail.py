@@ -36,10 +36,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     while True:
         mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
         #인증번호 검증
-        if not(mail['passnumber'].tolist()[-1].isdigit()):
-            time.sleep(0.5)
-            pass
-        else:
+        if mail['passnumber'].tolist()[-1].isdigit():
             #인증 진행
             passingN = driver.find_element(By.XPATH,'//input[@id="number1"]')
             passingnumber = mail['passnumber'].tolist()[-1]
@@ -105,6 +102,9 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
                 driver.quit()
                 time.sleep(1)
                 break
+        else:
+            time.sleep(0.5)
+            pass
 
 if __name__ == "__main__":
     while True:
