@@ -5,12 +5,12 @@ from pydantic import BaseModel
 import pandas as pd
 import re
 import database
-
+import dbReader
 app = FastAPI()
 #현재 파일의 디렉토리 경로를 가져옵니다.
 templates = Jinja2Templates(directory="templates")
 #info데이터 로드
-info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+info = dbReader.midInfo()
 midList = info['mid'].tolist()
 #homePage
 @app.get("/home",response_class=HTMLResponse)
