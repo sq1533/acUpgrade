@@ -5,13 +5,9 @@ from pydantic import BaseModel
 import pandas as pd
 import re
 import database
-import dbReader
 app = FastAPI()
 #현재 파일의 디렉토리 경로를 가져옵니다.
 templates = Jinja2Templates(directory="templates")
-#info데이터 로드
-info = dbReader.midInfo()
-midList = info['mid'].tolist()
 #homePage
 @app.get("/home",response_class=HTMLResponse)
 async def home(request:Request):
@@ -29,6 +25,8 @@ def alarm_1():
 @app.get("/alarm_1_info")
 def alarm_1_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-1]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-1]['mid']])]['info'].reset_index(drop=True)[0])
     else:
@@ -37,6 +35,8 @@ def alarm_1_info():
 @app.get("/alarm_1_char")
 def alarm_1_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-1]['mid'] in midList:
         midChar = info[info['mid'].isin([alarm.iloc[-1]['mid']])]['char'].reset_index(drop=True)[0]
     else:
@@ -51,6 +51,8 @@ def alarm_2():
 @app.get("/alarm_2_info")
 def alarm_2_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-2]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-2]['mid']])]['info'].reset_index(drop=True)[0])
     else:
@@ -59,6 +61,8 @@ def alarm_2_info():
 @app.get("/alarm_2_char")
 def alarm_2_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-2]['mid'] in midList:
         midChar = info[info['mid'].isin([alarm.iloc[-2]['mid']])]['char'].reset_index(drop=True)[0]
     else:
@@ -73,6 +77,8 @@ def alarm_3():
 @app.get("/alarm_3_info")
 def alarm_3_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-3]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-3]['mid']])]['info'].reset_index(drop=True)[0])
     else:
@@ -81,6 +87,8 @@ def alarm_3_info():
 @app.get("/alarm_3_char")
 def alarm_3_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-3]['mid'] in midList:
         midChar = info[info['mid'].isin([alarm.iloc[-3]['mid']])]['char'].reset_index(drop=True)[0]
     else:
@@ -95,6 +103,8 @@ def alarm_4():
 @app.get("/alarm_4_info")
 def alarm_4_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-4]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-4]['mid']])]['info'].reset_index(drop=True)[0])
     else:
@@ -103,6 +113,8 @@ def alarm_4_info():
 @app.get("/alarm_4_char")
 def alarm_4_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-4]['mid'] in midList:
         midChar = info[info['mid'].isin([alarm.iloc[-4]['mid']])]['char'].reset_index(drop=True)[0]
     else:
@@ -117,6 +129,8 @@ def alarm_5():
 @app.get("/alarm_5_info")
 def alarm_5_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-5]['mid'] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-5]['mid']])]['info'].reset_index(drop=True)[0])
     else:
@@ -125,6 +139,8 @@ def alarm_5_info():
 @app.get("/alarm_5_char")
 def alarm_5_info():
     alarm = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    info = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\2midInfo.json",orient="records",dtype={"mid":str,"info":str,"char":str})
+    midList = info['mid'].tolist()
     if alarm.iloc[-5]['mid'] in midList:
         midChar = info[info['mid'].isin([alarm.iloc[-5]['mid']])]['char'].reset_index(drop=True)[0]
     else:
