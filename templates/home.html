@@ -93,17 +93,12 @@
 </body>
     <script>
         function copyText(elementId) {
-            // 복사할 텍스트 요소를 선택
             var textElement = document.getElementById(elementId);
-            // 임시 텍스트 영역을 생성
             var tempTextArea = document.createElement("textarea");
             tempTextArea.value = textElement.innerText;
             document.body.appendChild(tempTextArea);
-            // 텍스트 영역의 내용을 선택
             tempTextArea.select();
-            // 복사 명령 실행
             document.execCommand("copy");
-            // 임시 텍스트 영역 제거
             document.body.removeChild(tempTextArea);
         }
     </script>
