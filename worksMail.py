@@ -120,11 +120,11 @@ if __name__ == "__main__":
         startPoint = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json",orient='records')
         if startPoint['coochip'].tolist()[0] == 'start':
             ezMail(coochip['id'],coochip['pw'],bot['token'],bot['chatId'])
-            pd.DataFrame({"coochip":"end","enMail":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
             time.sleep(1)
         elif startPoint['enMail'].tolist()[0] == 'start':
             ezMail(enMail['id'],enMail['pw'],bot['token'],bot['chatId'])
-            pd.DataFrame({"coochip":"end","enMail":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
             time.sleep(1)
         else:
             time.sleep(1)

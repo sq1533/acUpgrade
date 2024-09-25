@@ -27,7 +27,7 @@ tab1,tab2 = st.tabs(["영문메일 전송","쿠칩메일 전송"])
 with tab1:
     #인증번호 입력
     if st.button(label="영문메일 전송"):
-        pd.DataFrame({"coochip":"end","enMail":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
     #메일 정보 입력
     bady1 = row(3, vertical_align="center")
     st.write("수신자")
@@ -141,7 +141,7 @@ Thank you.
 with tab2:
     #인증번호 입력
     if st.button(label="쿠칩메일 전송"):
-        pd.DataFrame({"coochip":"start","enMail":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame({"coochip":"start","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
     bady1 = row(3, vertical_align="center")
     bady2_1 = row(1, vertical_align="center")
     bady2_2 = row(1, vertical_align="center")
