@@ -39,9 +39,8 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     time.sleep(5)
     exit_flag = False
     while True:
-        mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
-        #인증번호 검증
         for i in range(1000):
+            mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
             passingnumber = mail['passnumber'].tolist()[-1]
             if passingnumber.isdigit():
                 #인증 진행
