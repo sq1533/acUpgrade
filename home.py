@@ -40,9 +40,12 @@ def H_page():
         if st.checkbox("카카오 인증서",value=True):line.append(123)
         if st.checkbox("지역상품권chak",value=True):line.append(123)
         if st.button("전파"):
-            clipboard.copy(f"{send} 거래지연 발생중입니다.")
-            pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
-            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+            if send == "":
+                st.error("공유될 원천사 정보 없음")
+            else:
+                clipboard.copy(f"{send} 거래지연 발생중입니다.")
+                pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
+                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
 
 if __name__ == '__main__':
     H_page()
