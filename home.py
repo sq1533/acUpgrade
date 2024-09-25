@@ -1,4 +1,5 @@
 import json
+import time
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
@@ -46,6 +47,9 @@ def H_page():
                 clipboard.copy(f"{send} 거래지연 발생중입니다.")
                 pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
                 pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+                with st.spinner('구동중입니다.'):
+                    time.sleep(4)
+                    st.success('핫라인을 확인해주세요.')
 
 if __name__ == '__main__':
     H_page()
