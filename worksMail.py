@@ -10,7 +10,6 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     from selenium.webdriver.common.action_chains import ActionChains
     from selenium.webdriver.common.keys import Keys
     from selenium.webdriver.common.by import By
-    from selenium.common.exceptions import NoSuchElementException
     #크롬 옵션설정
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
@@ -54,8 +53,8 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
                 time.sleep(2)
                 driver.maximize_window()
                 time.sleep(1)
-                #로그인 검증
-                try:
+                mailHome = driver.find_elements(By.XPATH, '//input[@aria-label="받는사람"]')
+                if mailHome:
                     address = driver.find_element(By.XPATH,'//input[@aria-label="받는사람"]')#수신자 입력창
                     subaddress = driver.find_element(By.XPATH,'//input[@aria-label="참조"]')#참조 입력창
                     mailtitle = driver.find_element(By.XPATH,'//input[@aria-label="제목"]')#제목 입력창
@@ -96,7 +95,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
                     time.sleep(1)
                     exit_flag = True
                     break
-                except NoSuchElementException:
+                else:
                     pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
                     requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증실패, 재시도 요망")
                     driver.quit()
