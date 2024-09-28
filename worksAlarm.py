@@ -190,7 +190,7 @@ def alarmcheck():
             con = pd.concat([Alarm,ad],ignore_index=True)
             re(con)
         elif 'CONNECT' in AI_alarm:
-            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','')
+            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','').replace('(공영주차)','')
             VV_code_2 = VV_code_1.split('(',1)
             VV_code_3 = VV_code_2[1].split(')',1)
             VV_code = VV_code_3[0]
@@ -202,7 +202,7 @@ def alarmcheck():
             con = pd.concat([Alarm,ad],ignore_index=True)
             re(con)
         elif 'TIME' in AI_alarm:
-            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','')
+            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','').replace('(공영주차)','')
             VV_code_2 = VV_code_1.split('(',1)
             VV_code_3 = VV_code_2[1].split(')',1)
             VV_code = VV_code_3[0]
