@@ -7,37 +7,53 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body>
-    <div class="text-base font-sans flex-col leading-normal bg-gray-200 space-y-3 mx-auto max-w-2xl py-1 px-1 divide-y-4 divide-black divide-dashed divide-opacity-100">
-        <div>
-            <div class="box-border rounded-lg py-2 px-4 bg-white" id="alarm1" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
-            <button class="text-sm text-white box-border rounded-lg w-20 bg-blue-600" onclick="copyText('alarm1')">복사</button>
-            <div class="text-gray-700 py-2 px-4 bg-white" hx-get="/alarm_1_info" hx-trigger="load, every 2s"></div>
-            <div class="text-gray-700 py-2 px-4 bg-white" hx-get="/alarm_1_char" hx-trigger="load, every 2s"></div>
+    <div class="flex flex-col bg-green-100 space-y-5 mx-auto max-w-2xl py-2 px-2 font-sans leading-normal">
+        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
+            <div class="rounded-lg py-2 px-4 bg-white" id="alarm1" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
+            <button class="rounded-lg w-full bg-blue-600 font-bold text-white" onclick="copyText('alarm1')">복사</button>
+            <div class="box-border rounded-lg py-2 px-4 bg-white">
+                <div hx-get="/alarm_1_info" hx-trigger="load, every 2s"></div><br>
+                <li class="font-bold">담당자</li>
+                <div hx-get="/alarm_1_char" hx-trigger="load, every 2s"></div>
+            </div>
         </div>
-        <div>
-            <div class="box-border rounded-lg py-2 px-4 bg-white" id="alarm2" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
-            <button class="text-sm text-white box-border rounded-lg w-20 bg-blue-600" onclick="copyText('alarm2')">복사</button>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white" hx-get="/alarm_2_info" hx-trigger="load, every 2s"></div>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white"hx-get="/alarm_2_char" hx-trigger="load, every 2s"></div>
+        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
+            <div class="rounded-lg py-2 px-4 bg-white" id="alarm2" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
+            <button class="rounded-lg w-full bg-blue-600 font-bold text-white" onclick="copyText('alarm2')">복사</button>
+            <div class="box-border rounded-lg py-2 px-4 bg-white">
+                <div hx-get="/alarm_2_info" hx-trigger="load, every 2s"></div><br>
+                <li class="font-bold">담당자</li>
+                <div hx-get="/alarm_2_char" hx-trigger="load, every 2s"></div>
+            </div>
         </div>
-        <div>
-            <div class="box-border rounded-lg py-2 px-4 bg-white" id="alarm1" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
-            <button class="text-sm text-white box-border rounded-lg w-20 bg-blue-600" onclick="copyText('alarm3')">복사</button>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white" hx-get="/alarm_3_info" hx-trigger="load, every 2s"></div>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white"hx-get="/alarm_3_char" hx-trigger="load, every 2s"></div>
+        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
+            <div class="rounded-lg py-2 px-4 bg-white" id="alarm3" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
+            <button class="rounded-lg w-full bg-blue-600 font-bold text-white" onclick="copyText('alarm3')">복사</button>
+            <div class="box-border rounded-lg py-2 px-4 bg-white">
+                <div hx-get="/alarm_3_info" hx-trigger="load, every 2s"></div><br>
+                <li class="font-bold">담당자</li>
+                <div hx-get="/alarm_3_char" hx-trigger="load, every 2s"></div>
+            </div>
         </div>
-        <div>
-            <div class="box-border rounded-lg py-2 px-4 bg-white" id="alarm1" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
-            <button class="text-sm text-white box-border rounded-lg w-20 bg-blue-600" onclick="copyText('alarm4')">복사</button>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white" hx-get="/alarm_4_info" hx-trigger="load, every 2s"></div>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white"hx-get="/alarm_4_char" hx-trigger="load, every 2s"></div>
+        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
+            <div class="rounded-lg py-2 px-4 bg-white" id="alarm4" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
+            <button class="rounded-lg w-full bg-blue-600 font-bold text-white" onclick="copyText('alarm4')">복사</button>
+            <div class="box-border rounded-lg py-2 px-4 bg-white">
+                <div hx-get="/alarm_4_info" hx-trigger="load, every 2s"></div><br>
+                <li class="font-bold">담당자</li>
+                <div hx-get="/alarm_4_char" hx-trigger="load, every 2s"></div>
+            </div>
         </div>
-        <div>
-            <div class="box-border rounded-lg py-2 px-4 bg-white" id="alarm1" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
-            <button class="text-sm text-white box-border rounded-lg w-20 bg-blue-600" onclick="copyText('alarm5')">복사</button>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white" hx-get="/alarm_5_info" hx-trigger="load, every 2s"></div>
-            <div class="text-gray-700 box-border rounded-lg py-2 px-4 bg-white"hx-get="/alarm_5_char" hx-trigger="load, every 2s"></div>
+        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
+            <div class="rounded-lg py-2 px-4 bg-white" id="alarm5" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
+            <button class="rounded-lg w-full bg-blue-600 font-bold text-white" onclick="copyText('alarm5')">복사</button>
+            <div class="box-border rounded-lg py-2 px-4 bg-white">
+                <div hx-get="/alarm_5_info" hx-trigger="load, every 2s"></div><br>
+                <li class="font-bold">담당자</li>
+                <div hx-get="/alarm_5_char" hx-trigger="load, every 2s"></div>
+            </div>
         </div>
+        
     </div>
 </body>
     <script>
