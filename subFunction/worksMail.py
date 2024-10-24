@@ -116,7 +116,7 @@ if __name__ == "__main__":
             loginInfo = json.load(f)
         enMail = pd.Series(loginInfo["enMail"])
         coochip = pd.Series(loginInfo["coochip"])
-        bot = pd.Series(loginInfo["emailbot"])
+        bot = pd.Series(loginInfo["ezmailbot"])
         startPoint = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json",orient='records')
         if startPoint['coochip'].tolist()[0] == 'start':
             ezMail(coochip['id'],coochip['pw'],bot['token'],bot['chatId'])
