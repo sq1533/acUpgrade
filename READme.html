@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24년 업무 성과 보고</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" >
+</head>
+<body class="bg-gray-200">
+    <div class="mx-auto max-w-4xl py-3 grid grid-cols-4 gap-2">
+        <div class="col-start-1 col-end-5 font-bold text-3xl text-center text-white rounded-2xl bg-gray-700">
+            24년 업무 성과 보고
+        </div>
+        <!--관제 보조도구-->
+        <div class="col-start-1 col-end-2 font-bold text-2xl text-center text-white rounded-xl bg-green-500">
+            관제 보조 도구
+        </div>
+        <div class="col-start-1 col-end-5 text-xl text-left">
+            <p class="font-bold">개발 목적</p>
+            1. 개인간 <b class="underline">정보 불균형</b> 해소<br>
+            2. 이슈 대응의 <b class="underline">항상성</b> 부여
+        </div>
+        <div class="col-start-1 col-end-5 text-xl text-left">
+            <p class="font-bold">개발 언어 및 오픈소스</p>
+            - python : <a class="text-red-600" href="https://streamlit.io/">streamlit</a>, <a class="text-green-700" href="https://fastapi.tiangolo.com/">fast API</a><br>
+            - HTML
+        </div>
+        <div class="col-start-1 col-end-5 text-xl text-center grid grid-cols-7 items-center">
+            <p class="col-start-1 col-end-8 font-bold text-left">구조</p>
+            <!--style="font-size:크기; color:색; transform:기울기;-->
+            <div class="text-green-600"><i class="material-symbols-outlined"style="font-size:100px;">sdk</i></div>
+            <div class="text-gray-700"><i class="material-symbols-outlined"style="font-size:50px;">label_important</i></div>
+            <div class="text-indigo-900"><i class="material-symbols-outlined"style="font-size:100px;">select_window</i></div>
+            <div class="text-blue-700"><i class="material-symbols-outlined"style="font-size:50px;">find_replace</i></div>
+            <div class="text-indigo-900"><i class="material-symbols-outlined"style="font-size:100px;">problem</i></div>
+            <div class="text-gray-700"><i class="material-symbols-outlined"style="font-size:50px;">label_important</i></div>
+            <div class="text-red-500">
+                <div><i class="material-symbols-outlined"style="font-size:50px;">http</i></div>
+                <div><i class="material-symbols-outlined"style="font-size:100px;">browse</i></div>
+            </div>
+            <div class="text-xl">네이버 웍스</div>
+            <div class="text-gray-700"><i class="material-symbols-outlined"style="font-size:50px;">label_important</i></div>
+            <div class="text-xl">alarm.json</div>
+            <div class="text-xl">MID 매칭</div>
+            <div class="text-xl">MID_info.json</div>
+            <div class="text-gray-700"><i class="material-symbols-outlined"style="font-size:50px;">label_important</i></div>
+            <div class="text-xl">관제보조도구</div>
+        </div>
+        <div class="col-start-1 col-end-5 text-xl text-left">
+            <p class="font-bold">[24년 개선사항]</p>
+            기존 streamlit 구동방식 > <span class="font-bold text-blue-500">streamlit + fast API + HTML</span> 구동방식 변경
+            <ol class="list-decimal font-bold">
+                - streamlit + fast API
+                <li class="list-inside">빠른 접속</li>
+                <li class="list-inside">브라우저 쿠키 및 세션 관리</li>
+                <li class="list-inside">DB 실시간 조회 가능</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
