@@ -11,7 +11,7 @@
     <div id="styleSwich" class="w-20 h-8 text-center rounded-full duration-500 bg-blue-500">
         <i id="modeIcon" class="material-symbols-outlined" style="font-size:32px;">wb_sunny</i>
     </div>
-    <div class="flex flex-col bg-green-100 space-y-3 mx-auto max-w-2xl py-2 px-2 font-sans leading-normal">
+    <div class="font-sans text-black leading-normal grid grid-cols-1 space-y-3 bg-green-100">
         <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
             <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm1" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
             <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm1')">알람 복사</button>
