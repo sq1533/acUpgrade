@@ -8,11 +8,11 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <!--container text background-->
-<body class="container max-w-xl mx-auto py-2 bg-white">
+<body id="backGround" class="container max-w-xl mx-auto bg-white">
     <button id="styleSwich" class="w-20 h-8 text-white text-center rounded-full duration-500 bg-blue-500">
         <i id="modeIcon" class="material-symbols-outlined" style="font-size:32px;">wb_sunny</i>
     </button>
-    <div id="background" class="grid grid-cols-1 font-sans leading-normal space-y-3 bg-white">
+    <div id="bwGround" class="grid grid-cols-1 font-sans leading-normal space-y-3 bg-white">
         <div id="alarm1Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
             <div id="alarm1" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
             <button id="alarm1Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm1')">알람 복사</button>
@@ -61,7 +61,8 @@
     </div>
 </body>
     <script>
-        const background = document.getElementById('background');
+        const backGround = document.getElementById('backGround');
+        const bwGround = document.getElementById('bwGround');
         const moodBtn = document.getElementById('styleSwich');
         const Icon = document.getElementById('modeIcon');
         const boxOutLine1 = document.getElementById('alarm1Box');
@@ -96,7 +97,8 @@
         };
         moodBtn.addEventListener('click',()=>{
             if(moodBtn.classList.contains('bg-blue-500')){
-                background.classList.replace('bg-white','bg-gray-400');
+                backGround.classList.replace('bg-white','bg-gray-400');
+                bwGround.classList.replace('bg-white','bg-gray-400');
                 moodBtn.classList.replace('bg-blue-500','bg-green-500');
                 moodBtn.classList.replace('text-white','text-black');
                 Icon.textContent = 'bedtime';
@@ -131,7 +133,8 @@
                 alarmInfo5.classList.replace('bg-white','bg-gray-600');
                 alarmInfo5.classList.replace('text-black','text-white');
             }else{
-                background.classList.replace('bg-gray-400','bg-white');
+                backGround.classList.replace('bg-white','bg-gray-400');
+                bwGround.classList.replace('bg-gray-400','bg-white');
                 moodBtn.classList.replace('bg-green-500','bg-blue-500');
                 moodBtn.classList.replace('text-black','text-white');
                 Icon.textContent = 'wb_sunny';
