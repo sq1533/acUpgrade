@@ -7,63 +7,83 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" >
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
+<!--container text background-->
 <body class="container max-w-xl mx-auto py-2 bg-white">
-    <div id="styleSwich" class="w-20 h-8 text-center rounded-full duration-500 bg-blue-500">
+    <button id="styleSwich" class="w-20 h-8 text-white text-center rounded-full duration-500 bg-blue-500">
         <i id="modeIcon" class="material-symbols-outlined" style="font-size:32px;">wb_sunny</i>
-    </div>
-    <div class="font-sans text-black leading-normal grid grid-cols-1 space-y-3 bg-green-100">
-        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
-            <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm1" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
-            <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm1')">알람 복사</button>
-            <div class="box-border rounded-lg py-2 px-4 bg-white">
+    </button>
+    <div id="background" class="grid grid-cols-1 font-sans leading-normal space-y-3 bg-white">
+        <div id="alarm1Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
+            <div id="alarm1" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_1" hx-trigger="load, every 2s"></div>
+            <button id="alarm1Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm1')">알람 복사</button>
+            <div id="alarm1Info" class="box-border w-full p-1 rounded-lg text-black bg-white">
                 <div hx-get="/alarm_1_info" hx-trigger="load, every 2s"></div><br>
                 <li class="font-bold">담당자</li>
                 <div hx-get="/alarm_1_char" hx-trigger="load, every 2s"></div>
             </div>
         </div>
-        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
-            <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm2" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
-            <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm2')">알람 복사</button>
-            <div class="box-border rounded-lg py-2 px-4 bg-white">
+        <div id="alarm2Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
+            <div id="alarm2" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_2" hx-trigger="load, every 2s"></div>
+            <button id="alarm2Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm2')">알람 복사</button>
+            <div id="alarm2Info" class="box-border w-full p-1 rounded-lg text-black bg-white">
                 <div hx-get="/alarm_2_info" hx-trigger="load, every 2s"></div><br>
                 <li class="font-bold">담당자</li>
                 <div hx-get="/alarm_2_char" hx-trigger="load, every 2s"></div>
             </div>
         </div>
-        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
-            <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm3" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
-            <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm3')">알람 복사</button>
-            <div class="box-border rounded-lg py-2 px-4 bg-white">
+        <div id="alarm3Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
+            <div id="alarm3" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_3" hx-trigger="load, every 2s"></div>
+            <button id="alarm3Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm3')">알람 복사</button>
+            <div id="alarm3Info" class="box-border w-full p-1 rounded-lg text-black bg-white">
                 <div hx-get="/alarm_3_info" hx-trigger="load, every 2s"></div><br>
                 <li class="font-bold">담당자</li>
                 <div hx-get="/alarm_3_char" hx-trigger="load, every 2s"></div>
             </div>
         </div>
-        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
-            <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm4" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
-            <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm4')">알람 복사</button>
-            <div class="box-border rounded-lg py-2 px-4 bg-white">
+        <div id="alarm4Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
+            <div id="alarm4" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_4" hx-trigger="load, every 2s"></div>
+            <button id="alarm4Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm4')">알람 복사</button>
+            <div id="alarm4Info" class="box-border w-full p-1 rounded-lg text-black bg-white">
                 <div hx-get="/alarm_4_info" hx-trigger="load, every 2s"></div><br>
                 <li class="font-bold">담당자</li>
                 <div hx-get="/alarm_4_char" hx-trigger="load, every 2s"></div>
             </div>
         </div>
-        <div class="rounded-lg ring-2 ring-offset-2 ring-green-600 space-y-1">
-            <div class="rounded-lg py-2 px-4 text-sm bg-white" id="alarm5" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
-            <button class="rounded-lg w-full bg-blue-500 font-bold text-white" onclick="copyText('alarm5')">알람 복사</button>
-            <div class="box-border rounded-lg py-2 px-4 bg-white">
+        <div id="alarm5Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600">
+            <div id="alarm5" class="py-2 px-4 text-black text-sm rounded-lg bg-white" hx-get="/alarm_5" hx-trigger="load, every 2s"></div>
+            <button id="alarm5Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm5')">알람 복사</button>
+            <div id="alarm5Info" data-item-id="alarmInfoBox" class="box-border w-full p-1 rounded-lg text-black bg-white">
                 <div hx-get="/alarm_5_info" hx-trigger="load, every 2s"></div><br>
                 <li class="font-bold">담당자</li>
                 <div hx-get="/alarm_5_char" hx-trigger="load, every 2s"></div>
             </div>
         </div>
-        
     </div>
 </body>
     <script>
-        const button = document.getElementById('styleSwich');
-        const div = document.getElementById('planSpace');
+        const background = document.getElementById('background');
+        const moodBtn = document.getElementById('styleSwich');
         const Icon = document.getElementById('modeIcon');
+        const boxOutLine1 = document.getElementById('alarm1Box');
+        const boxOutLine2 = document.getElementById('alarm2Box');
+        const boxOutLine3 = document.getElementById('alarm3Box');
+        const boxOutLine4 = document.getElementById('alarm4Box');
+        const boxOutLine5 = document.getElementById('alarm5Box');
+        const copyBtn1 = document.getElementById('alarm1Copy');
+        const copyBtn2 = document.getElementById('alarm1Copy');
+        const copyBtn3 = document.getElementById('alarm1Copy');
+        const copyBtn4 = document.getElementById('alarm1Copy');
+        const copyBtn5 = document.getElementById('alarm1Copy');
+        const alarm1 = document.getElementById('alarm1');
+        const alarm2 = document.getElementById('alarm2');
+        const alarm3 = document.getElementById('alarm3');
+        const alarm4 = document.getElementById('alarm4');
+        const alarm5 = document.getElementById('alarm5');
+        const alarmInfo1 = document.getElementById('alarm1Info');
+        const alarmInfo2 = document.getElementById('alarm2Info');
+        const alarmInfo3 = document.getElementById('alarm3Info');
+        const alarmInfo4 = document.getElementById('alarm4Info');
+        const alarmInfo5 = document.getElementById('alarm5Info');
 
         function copyText(elementId) {
             var textElement = document.getElementById(elementId);
@@ -74,20 +94,77 @@
             document.execCommand("copy");
             document.body.removeChild(tempTextArea);
         };
-
-        button.addEventListener('click',()=>{
-            if(button.classList.contains('bg-blue-500')){
-                button.classList.remove('bg-blue-500','text-white');
-                button.classList.add('bg-green-500','text-black');
+        moodBtn.addEventListener('click',()=>{
+            if(moodBtn.classList.contains('bg-blue-500')){
+                background.classList.replace('bg-white','bg-gray-400');
+                moodBtn.classList.replace('bg-blue-500','bg-green-500');
+                moodBtn.classList.replace('text-white','text-black');
                 Icon.textContent = 'bedtime';
-                div.classList.remove('bg-pink-100','text-black');
-                div.classList.add('bg-gray-600','text-white');
+                boxOutLine1.classList.replace('ring-green-600','ring-red-600');
+                copyBtn1.classList.replace('bg-blue-500','bg-blue-800');
+                alarm1.classList.replace('bg-white','bg-gray-600');
+                alarm1.classList.replace('text-black','text-white');
+                alarmInfo1.classList.replace('bg-white','bg-gray-600');
+                alarmInfo1.classList.replace('text-black','text-white');
+                boxOutLine2.classList.replace('ring-green-600','ring-red-600');
+                copyBtn2.classList.replace('bg-blue-500','bg-blue-800');
+                alarm2.classList.replace('bg-white','bg-gray-600');
+                alarm2.classList.replace('text-black','text-white');
+                alarmInfo2.classList.replace('bg-white','bg-gray-600');
+                alarmInfo2.classList.replace('text-black','text-white');
+                boxOutLine3.classList.replace('ring-green-600','ring-red-600');
+                copyBtn3.classList.replace('bg-blue-500','bg-blue-800');
+                alarm3.classList.replace('bg-white','bg-gray-600');
+                alarm3.classList.replace('text-black','text-white');
+                alarmInfo3.classList.replace('bg-white','bg-gray-600');
+                alarmInfo3.classList.replace('text-black','text-white');
+                boxOutLine4.classList.replace('ring-green-600','ring-red-600');
+                copyBtn4.classList.replace('bg-blue-500','bg-blue-800');
+                alarm4.classList.replace('bg-white','bg-gray-600');
+                alarm4.classList.replace('text-black','text-white');
+                alarmInfo4.classList.replace('bg-white','bg-gray-600');
+                alarmInfo4.classList.replace('text-black','text-white');
+                boxOutLine5.classList.replace('ring-green-600','ring-red-600');
+                copyBtn5.classList.replace('bg-blue-500','bg-blue-800');
+                alarm5.classList.replace('bg-white','bg-gray-600');
+                alarm5.classList.replace('text-black','text-white');
+                alarmInfo5.classList.replace('bg-white','bg-gray-600');
+                alarmInfo5.classList.replace('text-black','text-white');
             }else{
-                button.classList.remove('bg-green-500','text-black');
-                button.classList.add('bg-blue-500','text-white');
+                background.classList.replace('bg-gray-400','bg-white');
+                moodBtn.classList.replace('bg-green-500','bg-blue-500');
+                moodBtn.classList.replace('text-black','text-white');
                 Icon.textContent = 'wb_sunny';
-                div.classList.remove('bg-gray-600','text-white');
-                div.classList.add('bg-pink-100','text-black');
+                boxOutLine1.classList.replace('ring-red-600','ring-green-600');
+                copyBtn1.classList.replace('bg-blue-800','bg-blue-500');
+                alarm1.classList.replace('bg-gray-600','bg-white');
+                alarm1.classList.replace('text-white','text-black');
+                alarmInfo1.classList.replace('bg-gray-600','bg-white');
+                alarmInfo1.classList.replace('text-white','text-black');
+                boxOutLine2.classList.replace('ring-red-600','ring-green-600');
+                copyBtn2.classList.replace('bg-blue-800','bg-blue-500');
+                alarm2.classList.replace('bg-gray-600','bg-white');
+                alarm2.classList.replace('text-white','text-black');
+                alarmInfo2.classList.replace('bg-gray-600','bg-white');
+                alarmInfo2.classList.replace('text-white','text-black');
+                boxOutLine3.classList.replace('ring-red-600','ring-green-600');
+                copyBtn3.classList.replace('bg-blue-800','bg-blue-500');
+                alarm3.classList.replace('bg-gray-600','bg-white');
+                alarm3.classList.replace('text-white','text-black');
+                alarmInfo3.classList.replace('bg-gray-600','bg-white');
+                alarmInfo3.classList.replace('text-white','text-black');
+                boxOutLine4.classList.replace('ring-red-600','ring-green-600');
+                copyBtn4.classList.replace('bg-blue-800','bg-blue-500');
+                alarm4.classList.replace('bg-gray-600','bg-white');
+                alarm4.classList.replace('text-white','text-black');
+                alarmInfo4.classList.replace('bg-gray-600','bg-white');
+                alarmInfo4.classList.replace('text-white','text-black');
+                boxOutLine5.classList.replace('ring-red-600','ring-green-600');
+                copyBtn5.classList.replace('bg-blue-800','bg-blue-500');
+                alarm5.classList.replace('bg-gray-600','bg-white');
+                alarm5.classList.replace('text-white','text-black');
+                alarmInfo5.classList.replace('bg-gray-600','bg-white');
+                alarmInfo5.classList.replace('text-white','text-black');
             }});
     </script>
 </html>
