@@ -39,7 +39,7 @@ def H_page():
         if st.checkbox("카카오모빌리티",value=True):line.append(123)
         if st.checkbox("네이버페이",value=True):line.append(123)
         if st.checkbox("카카오 인증서",value=True):line.append(123)
-        if st.checkbox("지역상품권chak",value=True):line.append(123)
+        if st.checkbox("KT지역화폐",value=True):line.append(123)
         if st.button("전파"):
             if send == "":
                 st.error("공유될 원천사 정보 없음")
