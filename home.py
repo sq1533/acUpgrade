@@ -26,7 +26,7 @@ def H_page():
                 st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
             else:
                 st.write('존재하지 않는 MID입니다.')
-    components.iframe(url,width=650,height=2350)
+    components.iframe(url,width=650,height=3000)
     with st.sidebar:
         stoKey = st.selectbox("증권사 이용 핫라인",list(order['stock'].keys()))
         st.write(order["stock"][stoKey])
@@ -34,12 +34,12 @@ def H_page():
         st.code(svr)
         line = []
         send = st.text_input("핫라인 전파")
-        if st.checkbox("카카오페이",value=True):line.append(123)
-        if st.checkbox("쿠팡",value=True):line.append(123)
-        if st.checkbox("카카오모빌리티",value=True):line.append(123)
-        if st.checkbox("네이버페이",value=True):line.append(123)
-        if st.checkbox("카카오 인증서",value=True):line.append(123)
-        if st.checkbox("KT지역화폐",value=True):line.append(123)
+        if st.checkbox("카카오페이",value=True):line.append(230)
+        if st.checkbox("쿠팡",value=True):line.append(278)
+        if st.checkbox("카카오모빌리티",value=True):line.append(341)
+        if st.checkbox("네이버페이",value=True):line.append(392)
+        if st.checkbox("카카오 인증서",value=True):line.append(449)
+        if st.checkbox("KT지역화폐",value=True):line.append(510)
         if st.button("전파"):
             if send == "":
                 st.error("공유될 원천사 정보 없음")
@@ -51,5 +51,4 @@ def H_page():
                     time.sleep(4)
                     st.success('핫라인을 확인해주세요.')
 
-if __name__ == '__main__':
-    H_page()
+if __name__ == '__main__':H_page()
