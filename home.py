@@ -28,20 +28,14 @@ def H_page():
                 st.write('존재하지 않는 MID입니다.')
     components.iframe(url,width=650,height=3000)
     with st.sidebar:
-        stoKey = st.selectbox("증권사 이용 핫라인",list(order['stock'].keys()))
-        st.write(order["stock"][stoKey])
         svr = st.selectbox("주요 서버 목록",order["server"],index=None)
         st.code(svr)
-        line = []
-        send = st.text_input("핫라인 전파")
-        if st.checkbox("카카오페이",value=True):line.append(230)
-        if st.checkbox("쿠팡",value=True):line.append(278)
-        if st.checkbox("카카오모빌리티",value=True):line.append(341)
-        if st.checkbox("네이버페이",value=True):line.append(392)
-        if st.checkbox("카카오 인증서",value=True):line.append(449)
-        if st.checkbox("KT지역화폐",value=True):line.append(510)
+        stoKey = st.selectbox("핫라인 전파",list(order['hotLine'].keys()))
+        line = order["hotLine"][stoKey]
+        ment = st.radio("Choose an option",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
+        send = stoKey+' '+ment
         if st.button("전파"):
-            if send == "":
+            if send == "선택":
                 st.error("공유될 원천사 정보 없음")
             else:
                 clipboard.copy(f"{send} 거래지연 발생중입니다.")
