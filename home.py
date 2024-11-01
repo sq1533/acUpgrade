@@ -35,10 +35,10 @@ def H_page():
         ment = st.radio("Choose an option",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
         send = stoKey+' '+ment
         if st.button("전파"):
-            if send == "선택":
+            if stoKey == "선택":
                 st.error("공유될 원천사 정보 없음")
             else:
-                clipboard.copy(f"{send} 거래지연 발생중입니다.")
+                clipboard.copy(send)
                 pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
                 pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
                 with st.spinner('구동중입니다.'):
