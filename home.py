@@ -33,13 +33,31 @@ def H_page():
         stoKey = st.selectbox("핫라인 전파",list(order['hotLine'].keys()))
         line = order["hotLine"][stoKey]
         ment = st.radio("Choose an option",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
-        send = stoKey+' '+ment
-        if st.button("전파"):
+        fixed = stoKey+' '+ment
+        if st.button("장애전파"):
             if stoKey == "선택":
                 st.error("공유될 원천사 정보 없음")
             else:
-                clipboard.copy(send)
+                clipboard.copy(fixed)
                 pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
+                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+                with st.spinner('구동중입니다.'):
+                    time.sleep(4)
+                    st.success('핫라인을 확인해주세요.')
+        coor = []
+        unfixed = st.text_input("핫라인 전파")
+        if st.checkbox("카카오페이",value=True):coor.append(230)
+        if st.checkbox("쿠팡",value=True):coor.append(278)
+        if st.checkbox("카카오모빌리티",value=True):coor.append(341)
+        if st.checkbox("네이버페이",value=True):coor.append(392)
+        if st.checkbox("카카오 인증서",value=True):coor.append(449)
+        if st.checkbox("KT지역화폐",value=True):coor.append(510)
+        if st.button("전파"):
+            if unfixed == "":
+                st.error("공유될 원천사 정보 없음")
+            else:
+                clipboard.copy(f"{unfixed}")
+                pd.DataFrame(coor).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
                 pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
                 with st.spinner('구동중입니다.'):
                     time.sleep(4)
