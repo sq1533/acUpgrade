@@ -38,7 +38,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     ActionChains(driver).click(passingMail).perform()
     time.sleep(5)
     while True:
-        for i in range(1000):
+        for i in range(800):
             mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
             passingnumber = mail['passnumber'].tolist()[-1]
             if passingnumber.isdigit():
@@ -88,23 +88,19 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
                     time.sleep(5)
                     """
                     driver.quit()
-                    pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
                     requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=메일전송 성공")
                     time.sleep(1)
-                    exit_flag = True
                     break
                 else:
-                    pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
                     requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증실패, 재시도 요망")
                     driver.quit()
                     time.sleep(1)
-                    exit_flag = True
                     break
             else:
                 time.sleep(0.5)
                 pass
         pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
-        requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증 시간 초과")
+        requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=초기화 완료")
         break
 if __name__ == "__main__":
     while True:
