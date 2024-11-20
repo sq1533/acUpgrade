@@ -37,7 +37,6 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     passingMail = driver.find_element(By.XPATH,'//a[@id="privateEmailButton"]')
     ActionChains(driver).click(passingMail).perform()
     time.sleep(5)
-    exit_flag = False
     while True:
         for i in range(1000):
             mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
@@ -104,11 +103,9 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
             else:
                 time.sleep(0.5)
                 pass
-        if exit_flag:break
         pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
         requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=인증 시간 초과")
         break
-
 if __name__ == "__main__":
     while True:
         #로그인 및 시작 정보 확인
