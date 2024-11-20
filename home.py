@@ -18,7 +18,8 @@ def H_page():
 #실시간 알람 불러오기
     midInfo = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\2midInfo.json',orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = midInfo['mid'].tolist()
-    with st.expander(label="조회",expanded=False):
+    left, right = st.columns([2,1], vertical_alignment="top")
+    with left.expander(label="조회",expanded=False):
         mid = st.text_input("MID조회(입력 후 Enter)")
         if st.button("조회"):
             if mid in midList:
@@ -26,13 +27,14 @@ def H_page():
                 st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
             else:
                 st.write('존재하지 않는 MID입니다.')
-    components.iframe(url,width=650,height=3000)
-    with st.sidebar:
+    with right.expander(label="서버목록",expanded=False):
         svr = st.selectbox("주요 서버 목록",order["server"],index=None)
         st.code(svr)
+    components.iframe(url,width=650,height=3000)
+    with st.sidebar:
         stoKey = st.selectbox("핫라인 전파",list(order['hotLine'].keys()))
         line = order["hotLine"][stoKey]
-        ment = st.radio("Choose an option",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
+        ment = st.radio("장애내용",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
         fixed = stoKey+' '+ment
         if st.button("장애전파"):
             if stoKey == "선택":
@@ -62,5 +64,4 @@ def H_page():
                 with st.spinner('구동중입니다.'):
                     time.sleep(4)
                     st.success('핫라인을 확인해주세요.')
-
 if __name__ == '__main__':H_page()
