@@ -41,8 +41,7 @@ def alarmCheck(page):
     check = {"data-key":a_room, "class":"item_chat"}
     if soup.find('li',check).find(class_='new') != None:
         AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
-        if len(AR) > 10:AR.drop([0],axis=0,inplace=True)
-        else:pass
+        AR.drop([0],axis=0,inplace=True)
         A_li = soup.find('li',check).find(class_='new').find_parent('li')
         AI_alarm = A_li.find('dd').get_text().replace('●','<br>●')
         if any(i in AI_alarm for i in EXCEPT):pass
