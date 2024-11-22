@@ -41,68 +41,79 @@ def alarmCheck(page):
     check = {"data-key":a_room, "class":"item_chat"}
     if soup.find('li',check).find(class_='new') != None:
         AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
-        AR.drop([0],axis=0,inplace=True)
         A_li = soup.find('li',check).find(class_='new').find_parent('li')
         AI_alarm = A_li.find('dd').get_text().replace('●','<br>●')
         if any(i in AI_alarm for i in EXCEPT):pass
         elif '자동취소응답오류' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동취소응답오류"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '기관 재판매 PG 정산 정보 없음' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["재판매 정산 정보 없음"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'vavsreceipt' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["vavsreceipt"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '현금영수증' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["현금영수증"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'autocancel' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["autocancel"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '거래없음[' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["VAN_거래없음"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '은행 잔액 부족' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["가상 재판매 모계좌 잔액부족"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '응답지연' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["응답지연"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '응답 지연' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["응답지연"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '/미처리' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["미처리"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '(50)장애발생' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["저축은행 가상"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'VDBE' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["VDBE"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '큐확인요망' in AI_alarm:
@@ -110,6 +121,7 @@ def alarmCheck(page):
             F_code = al[1]
             a = {"Alarm":[AI_alarm],"mid":[F_code]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'VAN 20' in AI_alarm:
@@ -117,6 +129,7 @@ def alarmCheck(page):
             V_code = al[3]
             a = {"Alarm":[AI_alarm],"mid":[V_code]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'CONNECT' in AI_alarm:
@@ -126,6 +139,7 @@ def alarmCheck(page):
             VV_code = VV_code_3[0]
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'TIME' in AI_alarm:
@@ -135,6 +149,7 @@ def alarmCheck(page):
             VV_code = VV_code_3[0]
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         #AI_MON 알람
@@ -145,6 +160,7 @@ def alarmCheck(page):
             MID = MID_3[0]
             a = {"Alarm":[AI_alarm],"mid":[MID]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif any(i in AI_alarm for i in target_error):
@@ -154,11 +170,13 @@ def alarmCheck(page):
             code = str(MID_2[0])
             a = {"Alarm":[AI_alarm],"mid":[code]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         else:
             a = {"Alarm":[AI_alarm],"mid":["확인필요"]}
             add = pd.DataFrame(a,index=[0])
+            AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         new_alarm = page.find_element(By.CLASS_NAME,'chat_list').find_element(By.CLASS_NAME,'new')
