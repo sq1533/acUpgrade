@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import time
 import json
 import pandas as pd
+import re
 with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json','r',encoding="UTF-8") as f:
     login = json.load(f)
 works_login = pd.Series(login['works'])
@@ -50,8 +51,8 @@ def alarmCheck(page):
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
-        elif '기관 재판매 PG 정산 정보 없음' in AI_alarm:
-            a = {"Alarm":[AI_alarm],"mid":["재판매 정산 정보 없음"]}
+        elif '정산 정보 없음' in AI_alarm:
+            a = {"Alarm":[AI_alarm],"mid":["정산 정보 없음"]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
@@ -75,7 +76,7 @@ def alarmCheck(page):
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif '거래없음[' in AI_alarm:
-            a = {"Alarm":[AI_alarm],"mid":["VAN_거래없음"]}
+            a = {"Alarm":[AI_alarm],"mid":["VAN거래없음"]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
@@ -86,13 +87,7 @@ def alarmCheck(page):
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
-        elif '응답지연' in AI_alarm:
-            a = {"Alarm":[AI_alarm],"mid":["응답지연"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
-        elif '응답 지연' in AI_alarm:
+        elif '응답지연' in AI_alarm or '응답 지연' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["응답지연"]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
@@ -104,8 +99,8 @@ def alarmCheck(page):
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
-        elif '(50)장애발생' in AI_alarm:
-            a = {"Alarm":[AI_alarm],"mid":["저축은행 가상"]}
+        elif ')장애발생' in AI_alarm:
+            a = {"Alarm":[AI_alarm],"mid":["VAN가상장애"]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
@@ -133,20 +128,16 @@ def alarmCheck(page):
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'CONNECT' in AI_alarm:
-            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','').replace('(공영주차)','')
-            VV_code_2 = VV_code_1.split('(',1)
-            VV_code_3 = VV_code_2[1].split(')',1)
-            VV_code = VV_code_3[0]
+            VV_code_1 = re.search(r'\((\d+)\)',AI_alarm)
+            VV_code = VV_code_1.group(1)
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
             con = pd.concat([AR,add],ignore_index=True)
             postJson(con)
         elif 'TIME' in AI_alarm:
-            VV_code_1 = AI_alarm.replace('(주)','').replace('(지역페이)','').replace('(지정계좌)','').replace('(쇼핑)','').replace('(공영주차)','')
-            VV_code_2 = VV_code_1.split('(',1)
-            VV_code_3 = VV_code_2[1].split(')',1)
-            VV_code = VV_code_3[0]
+            VV_code_1 = re.search(r'\((\d+)\)',AI_alarm)
+            VV_code = VV_code_1.group(1)
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
             add = pd.DataFrame(a,index=[0])
             AR.drop([0],axis=0,inplace=True)
