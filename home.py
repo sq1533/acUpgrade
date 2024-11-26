@@ -48,12 +48,12 @@ def H_page():
                     st.success('핫라인을 확인해주세요.')
         coor = []
         unfixed = st.text_input("핫라인 전파")
-        if st.checkbox("카카오페이",value=True):coor.append(230)
-        if st.checkbox("쿠팡",value=True):coor.append(278)
-        if st.checkbox("카카오모빌리티",value=True):coor.append(341)
-        if st.checkbox("네이버페이",value=True):coor.append(392)
-        if st.checkbox("카카오 인증서",value=True):coor.append(449)
-        if st.checkbox("KT지역화폐",value=True):coor.append(510)
+        if st.checkbox("카카오페이",value=True):coor.append(266)
+        if st.checkbox("쿠팡",value=True):coor.append(326)
+        if st.checkbox("카카오모빌리티",value=True):coor.append(385)
+        if st.checkbox("네이버페이",value=True):coor.append(438)
+        if st.checkbox("카카오 인증서",value=True):coor.append(495)
+        if st.checkbox("KT지역화폐",value=True):coor.append(552)
         if st.button("전파"):
             if unfixed == "":
                 st.error("공유될 원천사 정보 없음")
