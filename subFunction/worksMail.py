@@ -2,9 +2,7 @@ import time
 import requests
 import json
 import pandas as pd
-
-def ezMail(id:str,pw:str,botAPI:str,botID:str):
-    mailReset = {"passnumber":"test","addr":"test_a","subaddr":"test_s","title":"test_t","main":"test_m"}
+def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
     #크롬 드라이버 옵션 설정
     from selenium import webdriver
     from selenium.webdriver.common.action_chains import ActionChains
@@ -18,22 +16,17 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
     options.add_argument('--disable-extensions')
     options.add_argument('--blink-settings=imagesEnabled=false')
     driver = webdriver.Chrome(options=options)
-    #크롬 드라이버 실행
     url = "https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Fmail.worksmobile.com%2F"
     driver.get(url)
     driver.implicitly_wait(1)
-    #로그인 정보입력(아이디)
     id_box = driver.find_element(By.XPATH,'//input[@id="user_id"]')
     login_button_1 = driver.find_element(By.XPATH,'//button[@id="loginStart"]')
-    ActionChains(driver)
     ActionChains(driver).send_keys_to_element(id_box, '{}'.format(id)).click(login_button_1).perform()
     time.sleep(1)
-    #로그인 정보입력(비밀번호)
     password_box = driver.find_element(By.XPATH,'//input[@id="user_pwd"]')
     login_button_2 = driver.find_element(By.XPATH,'//button[@id="loginBtn"]')
     ActionChains(driver).send_keys_to_element(password_box, '{}'.format(pw)).click(login_button_2).perform()
     time.sleep(1)
-    #인증번호 전송
     passingMail = driver.find_element(By.XPATH,'//a[@id="privateEmailButton"]')
     ActionChains(driver).click(passingMail).perform()
     time.sleep(5)
@@ -41,14 +34,13 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
         for i in range(800):
             mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
             passingnumber = mail['passnumber'].tolist()[-1]
+            #인증번호 검증
             if passingnumber.isdigit():
-                #인증 진행
                 passingN = driver.find_element(By.XPATH,'//input[@id="number1"]')
                 ActionChains(driver).click(passingN).send_keys('{}'.format(passingnumber)).perform()
                 time.sleep(1)
-                #메일전송 페이지 전환
                 driver.get('https://mail.worksmobile.com/#/compose?orderType=new')
-                time.sleep(2)
+                time.sleep(1)
                 driver.maximize_window()
                 time.sleep(1)
                 mailHome = driver.find_elements(By.XPATH, '//input[@aria-label="받는사람"]')
@@ -99,6 +91,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str):
             else:
                 time.sleep(0.5)
                 pass
+        mailReset = {"passnumber":"test","addr":"test_a","subaddr":"test_s","title":"test_t","main":"test_m"}
         pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
         requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=초기화 완료")
         break

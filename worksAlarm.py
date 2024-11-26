@@ -18,11 +18,14 @@ target_error = [':동일오류',':오류발생']
 #알람방 타켓
 a_room = ["26143386","26143422","26143419","82166397","26143441","108290282","108290470","26143427"]
 #알람데이터 json파일 저장
-def postJson(x):
-    alarmJson = x.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient='records',force_ascii=False,indent=4)
-    return alarmJson
+def postJson(newalarm:dict) -> None:
+    AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
+    add = pd.DataFrame(newalarm,index=[0])
+    AR.drop([0],axis=0,inplace=True)
+    con = pd.concat([AR,add],ignore_index=True)
+    con.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient='records',force_ascii=False,indent=4)
 #페이지 로그인
-def getHome(page):
+def getHome(page) -> None:
     #로그인 정보입력(아이디)
     id_box = page.find_element(By.XPATH,'//input[@id="user_id"]')
     login_button_1 = page.find_element(By.XPATH,'//button[@id="loginStart"]')
@@ -37,112 +40,67 @@ def getHome(page):
     ActionChains(page).send_keys_to_element(password_box, '{}'.format(password)).click(login_button_2).perform()
     time.sleep(1)
 #알람데이터 크롤링
-def alarmCheck(page):
+def alarmCheck(page) -> None:
     soup = BeautifulSoup(page.page_source,'html.parser')
     check = {"data-key":a_room, "class":"item_chat"}
     if soup.find('li',check).find(class_='new') != None:
-        AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
+        
         A_li = soup.find('li',check).find(class_='new').find_parent('li')
         AI_alarm = A_li.find('dd').get_text().replace('●','<br>●')
         if any(i in AI_alarm for i in EXCEPT):pass
         elif '자동취소응답오류' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동취소응답오류"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '정산 정보 없음' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["정산 정보 없음"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'vavsreceipt' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["vavsreceipt"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '현금영수증' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["현금영수증"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'autocancel' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["autocancel"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '거래없음[' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["VAN거래없음"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '은행 잔액 부족' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["가상 재판매 모계좌 잔액부족"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '응답지연' in AI_alarm or '응답 지연' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["응답지연"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '/미처리' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["미처리"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif ')장애발생' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["VAN가상장애"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'VDBE' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["VDBE"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif '큐확인요망' in AI_alarm:
             al = AI_alarm.split(' ')
             F_code = al[1]
             a = {"Alarm":[AI_alarm],"mid":[F_code]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'VAN 20' in AI_alarm:
             al = AI_alarm.split(' ')
             V_code = al[3]
             a = {"Alarm":[AI_alarm],"mid":[V_code]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'CONNECT' in AI_alarm:
             VV_code_1 = re.search(r'\((\d+)\)',AI_alarm)
             VV_code = VV_code_1.group(1)
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif 'TIME' in AI_alarm:
             VV_code_1 = re.search(r'\((\d+)\)',AI_alarm)
             VV_code = VV_code_1.group(1)
             a = {"Alarm":[AI_alarm],"mid":[VV_code]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         #AI_MON 알람
         elif any(i in AI_alarm for i in target_simple):
             MID_1 = AI_alarm.split('가맹점:')
@@ -150,26 +108,17 @@ def alarmCheck(page):
             MID_3 = MID_2[1].split(']',1)
             MID = MID_3[0]
             a = {"Alarm":[AI_alarm],"mid":[MID]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         elif any(i in AI_alarm for i in target_error):
             AI = AI_alarm.replace(' ','')
             MID_1 = AI.split('오류코드:')
             MID_2 = MID_1[1].split('(',1)
             code = str(MID_2[0])
             a = {"Alarm":[AI_alarm],"mid":[code]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         else:
             a = {"Alarm":[AI_alarm],"mid":["확인필요"]}
-            add = pd.DataFrame(a,index=[0])
-            AR.drop([0],axis=0,inplace=True)
-            con = pd.concat([AR,add],ignore_index=True)
-            postJson(con)
+            postJson(a)
         new_alarm = page.find_element(By.CLASS_NAME,'chat_list').find_element(By.CLASS_NAME,'new')
         new_alarm.click()
         page.refresh()

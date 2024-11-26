@@ -13,9 +13,8 @@ with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json', 'r', encoding="UTF-8") a
 with open('C:\\Users\\USER\\ve_1\\DB\\5sideBar.json','r',encoding="UTF-8") as f:
     order = json.load(f)
 url = pd.Series(login_DB['IP'])['IP']+"/home"
-#실시간 알람 불러오기
-def H_page():
-#실시간 알람 불러오기
+def H_page() -> None:
+    #조회기능
     midInfo = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\2midInfo.json',orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = midInfo['mid'].tolist()
     left, right = st.columns([2,1], vertical_alignment="top")
@@ -27,9 +26,11 @@ def H_page():
                 st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
             else:
                 st.write('존재하지 않는 MID입니다.')
+    #주요 서버 목록
     with right.expander(label="서버목록",expanded=False):
         svr = st.selectbox("주요 서버 목록",order["server"],index=None)
         st.code(svr)
+    #실시간 알람 불러오기
     components.iframe(url,width=650,height=3000)
     with st.sidebar:
         stoKey = st.selectbox("핫라인 전파",list(order['hotLine'].keys()))
