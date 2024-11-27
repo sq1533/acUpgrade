@@ -18,7 +18,7 @@ def reMind() -> None:
             if len(read.index.tolist()) == 1:pass
             else:
                 for i in range(1,len(read.index.tolist())):
-                    sendText = f"Fax수신일자 : {read["date"][i]}\n원천사 : {read["bank"][i]}\n팩스정보{read["info"][i]}\n민원등록 여부 : {read["signUp"][i]}"
+                    sendText = f"Fax수신일자 : {read["date"][i]}\n원천사 : {read["bank"][i]}\n팩스정보 : {read["info"][i]}\n민원등록 여부 : {read["signUp"][i]}"
                     requests.get(f"https://api.telegram.org/bot{bot_info['token']}/sendMessage?chat_id={bot_info['chatId']}&text={sendText}")
                     time.sleep(1)
                 #발송 후 데이터 리셋
