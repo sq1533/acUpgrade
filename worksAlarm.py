@@ -44,7 +44,6 @@ def alarmCheck(page) -> None:
     soup = BeautifulSoup(page.page_source,'html.parser')
     check = {"data-key":a_room, "class":"item_chat"}
     if soup.find('li',check).find(class_='new') != None:
-        
         A_li = soup.find('li',check).find(class_='new').find_parent('li')
         AI_alarm = A_li.find('dd').get_text().replace('●','<br>●')
         if any(i in AI_alarm for i in EXCEPT):pass
