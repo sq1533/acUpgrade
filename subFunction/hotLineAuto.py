@@ -3,9 +3,7 @@ import time
 import pandas as pd
 def hotLine(Y=int) -> None:
     pyautogui.doubleClick(x=950,y=Y,interval=0.2)
-    time.sleep(0.2)
     pyautogui.click(x=42,y=622,interval=0.2)
-    time.sleep(0.2)
     pyautogui.hotkey('ctrl','v')
     pyautogui.press("enter")
     pyautogui.press("esc")
