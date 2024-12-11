@@ -1,8 +1,8 @@
-import time
 import os
-import requests
 import json
 import pandas as pd
+import time
+import requests
 loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
 mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
 mailACCPath = os.path.join(os.path.dirname(__file__),"DB","4-3mailAccess.json")

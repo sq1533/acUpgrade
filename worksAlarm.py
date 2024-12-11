@@ -1,12 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
-import time
 import os
 import json
 import pandas as pd
+import time
 import re
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from bs4 import BeautifulSoup
 loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
 alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
 with open(loginPath,'r',encoding="UTF-8") as f:

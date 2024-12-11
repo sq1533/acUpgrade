@@ -1,11 +1,12 @@
-import json
 import os
-import time
+import json
 import pandas as pd
+import time
+import clipboard
 import streamlit as st
 import streamlit.components.v1 as components
+
 from customs.custom import css
-import clipboard
 #상단 빈칸제거 및 사이드바 제거
 st.markdown(css,unsafe_allow_html=True)
 #데이터 불러오기

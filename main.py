@@ -1,10 +1,11 @@
+import os
+import pandas as pd
+import re
 from fastapi import FastAPI,Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-import pandas as pd
-import os
-import re
+
 import database
 midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
 alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
