@@ -3,10 +3,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
+import os
 import json
 import pandas as pd
 import re
-with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json','r',encoding="UTF-8") as f:
+loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
+alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
+with open(loginPath,'r',encoding="UTF-8") as f:
     login = json.load(f)
 works_login = pd.Series(login['works'])
 #알람제외 대상자
@@ -19,11 +22,11 @@ target_error = [':동일오류',':오류발생']
 a_room = ["26143386","26143422","26143419","82166397","26143441","108290282","108290470","26143427"]
 #알람데이터 json파일 저장
 def postJson(newalarm:dict) -> None:
-    AR = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json',orient='records',dtype={'Alarm':str,'mid':str})
+    AR = pd.read_json(alarmPath,orient='records',dtype={'Alarm':str,'mid':str})
     add = pd.DataFrame(newalarm,index=[0])
     AR.drop([0],axis=0,inplace=True)
     con = pd.concat([AR,add],ignore_index=True)
-    con.to_json("C:\\Users\\USER\\ve_1\\DB\\1worksAlarm.json",orient='records',force_ascii=False,indent=4)
+    con.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
 #페이지 로그인
 def getHome(page) -> None:
     #로그인 정보입력(아이디)

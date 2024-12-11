@@ -1,4 +1,5 @@
 import json
+import os
 import time
 import pandas as pd
 import streamlit as st
@@ -8,14 +9,19 @@ import clipboard
 #상단 빈칸제거 및 사이드바 제거
 st.markdown(css,unsafe_allow_html=True)
 #데이터 불러오기
-with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json', 'r', encoding="UTF-8") as f:
+loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
+midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
+mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
+hotLinePath = os.path.join(os.path.dirname(__file__),"DB","4-4hotLine.json")
+sideBarPath = os.path.join(os.path.dirname(__file__),"DB","5sideBar.json")
+with open(loginPath, 'r', encoding="UTF-8") as f:
     login_DB = json.load(f)
-with open('C:\\Users\\USER\\ve_1\\DB\\5sideBar.json','r',encoding="UTF-8") as f:
+with open(sideBarPath,'r',encoding="UTF-8") as f:
     order = json.load(f)
 url = pd.Series(login_DB['IP'])['IP']+"/home"
 def H_page() -> None:
     #조회기능
-    midInfo = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\2midInfo.json',orient="records",dtype={"mid":str,"info":str,"char":str})
+    midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = midInfo['mid'].tolist()
     left, right = st.columns([2,1], vertical_alignment="top")
     with left.expander(label="조회",expanded=False):
@@ -42,8 +48,8 @@ def H_page() -> None:
                 st.error("공유될 원천사 정보 없음")
             else:
                 clipboard.copy(fixed)
-                pd.DataFrame(line).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
-                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+                pd.DataFrame(line).to_json(hotLinePath,orient='columns',force_ascii=False,indent=4)
+                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
                 with st.spinner('구동중입니다.'):
                     time.sleep(4)
                     st.success('핫라인을 확인해주세요.')
@@ -61,8 +67,8 @@ def H_page() -> None:
                 st.error("공유될 원천사 정보 없음")
             else:
                 clipboard.copy(f"{unfixed}")
-                pd.DataFrame(coor).to_json('C:\\Users\\USER\\ve_1\\DB\\4-4hotLine.json',orient='columns',force_ascii=False,indent=4)
-                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+                pd.DataFrame(coor).to_json(hotLinePath,orient='columns',force_ascii=False,indent=4)
+                pd.DataFrame({"coochip":"end","enMail":"end","hotline":"start"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
                 with st.spinner('구동중입니다.'):
                     time.sleep(4)
                     st.success('핫라인을 확인해주세요.')

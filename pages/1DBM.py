@@ -1,12 +1,14 @@
 import requests
 import pandas as pd
+import os
 import json
 import streamlit as st
 from customs.custom import css
 #사이드바 제거
 st.markdown(css, unsafe_allow_html=True)
 #데이터 불러오기
-midInfo = pd.read_json('C:\\Users\\USER\\ve_1\\DB\\2midInfo.json',orient="records",dtype={"mid":str,"info":str,"char":str})
+midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
+midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
 midList = midInfo['mid'].tolist()
 #DB수정 API
 url = "http://127.0.0.1:8000/mk_info"

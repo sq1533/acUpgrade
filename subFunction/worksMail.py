@@ -1,7 +1,11 @@
 import time
+import os
 import requests
 import json
 import pandas as pd
+loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
+mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
+mailACCPath = os.path.join(os.path.dirname(__file__),"DB","4-3mailAccess.json")
 def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
     #크롬 드라이버 옵션 설정
     from selenium import webdriver
@@ -32,7 +36,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
     time.sleep(5)
     while True:
         for i in range(800):
-            mail = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json",orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
+            mail = pd.read_json(mailACCPath,orient='records',dtype={"passnumber":str,"addr":str,"subaddr":str,"title":str,"main":str})
             passingnumber = mail['passnumber'].tolist()[-1]
             #인증번호 검증
             if passingnumber.isdigit():
@@ -92,25 +96,25 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
                 time.sleep(0.5)
                 pass
         mailReset = {"passnumber":"test","addr":"test_a","subaddr":"test_s","title":"test_t","main":"test_m"}
-        pd.DataFrame(mailReset,index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-3mailAccess.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame(mailReset,index=[0]).to_json(mailACCPath,orient='records',force_ascii=False,indent=4)
         requests.get(f"https://api.telegram.org/bot{botAPI}/sendMessage?chat_id={botID}&text=초기화 완료")
         break
 if __name__ == "__main__":
     while True:
         #로그인 및 시작 정보 확인
-        with open('C:\\Users\\USER\\ve_1\\DB\\3loginInfo.json','r',encoding='utf-8') as f:
+        with open(loginPath,'r',encoding='utf-8') as f:
             loginInfo = json.load(f)
         enMail = pd.Series(loginInfo["enMail"])
         coochip = pd.Series(loginInfo["coochip"])
         bot = pd.Series(loginInfo["ezmailbot"])
-        startPoint = pd.read_json("C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json",orient='records')
+        startPoint = pd.read_json(mailTriggerPath,orient='records')
         if startPoint['coochip'].tolist()[0] == 'start':
             ezMail(coochip['id'],coochip['pw'],bot['token'],bot['chatId'])
-            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
             time.sleep(1)
         elif startPoint['enMail'].tolist()[0] == 'start':
             ezMail(enMail['id'],enMail['pw'],bot['token'],bot['chatId'])
-            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+            pd.DataFrame({"coochip":"end","enMail":"end","hotline":"end"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
             time.sleep(1)
         else:
             time.sleep(1)

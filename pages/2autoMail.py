@@ -3,6 +3,7 @@ from datetime import datetime
 import pandas as pd
 import requests
 import json
+import os
 import streamlit as st
 from streamlit_extras.row import row
 from customs.custom import css
@@ -12,7 +13,9 @@ st.markdown(css, unsafe_allow_html=True)
 def sendMail():
     requests.post("http://127.0.0.1:8000/email",json.dumps(email))
 #DB데이터 불러오기
-with open('C:\\Users\\USER\\ve_1\\DB\\4-2mailInfo.json', 'r', encoding='utf-8') as f:
+mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
+mailInfoPath = os.path.join(os.path.dirname(__file__),"DB","4-2mailInfo.json")
+with open(mailInfoPath, 'r', encoding='utf-8') as f:
     mailInfo = json.load(f)
 coochip = pd.Series(mailInfo["쿠칩"])
 cooIndex = pd.Series(mailInfo["쿠칩제목"])
@@ -27,7 +30,7 @@ tab1,tab2 = st.tabs(["영문메일 전송","쿠칩메일 전송"])
 with tab1:
     #인증번호 입력
     if st.button(label="영문메일 전송"):
-        pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
     #메일 정보 입력
     bady1 = row(3, vertical_align="center")
     st.write("수신자")
@@ -141,7 +144,7 @@ Thank you.
 with tab2:
     #인증번호 입력
     if st.button(label="쿠칩메일 전송"):
-        pd.DataFrame({"coochip":"start","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame({"coochip":"start","enMail":"end","hotline":"end"},index=[0]).to_json(mailTriggerPath,orient='records',force_ascii=False,indent=4)
     bady1 = row(3, vertical_align="center")
     bady2_1 = row(1, vertical_align="center")
     bady2_2 = row(1, vertical_align="center")
