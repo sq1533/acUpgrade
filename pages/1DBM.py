@@ -8,7 +8,7 @@ from customs.custom import css
 #사이드바 제거
 st.markdown(css, unsafe_allow_html=True)
 #데이터 불러오기
-midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
+midInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","2midInfo.json")
 midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
 midList = midInfo['mid'].tolist()
 #DB수정 API

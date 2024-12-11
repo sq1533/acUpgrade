@@ -14,8 +14,8 @@ st.markdown(css, unsafe_allow_html=True)
 def sendMail():
     requests.post("http://127.0.0.1:8000/email",json.dumps(email))
 #DB데이터 불러오기
-mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
-mailInfoPath = os.path.join(os.path.dirname(__file__),"DB","4-2mailInfo.json")
+mailTriggerPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-1mailStart.json")
+mailInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-2mailInfo.json")
 with open(mailInfoPath, 'r', encoding='utf-8') as f:
     mailInfo = json.load(f)
 coochip = pd.Series(mailInfo["쿠칩"])

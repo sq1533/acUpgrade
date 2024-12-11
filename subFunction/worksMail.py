@@ -3,9 +3,9 @@ import json
 import pandas as pd
 import time
 import requests
-loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
-mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
-mailACCPath = os.path.join(os.path.dirname(__file__),"DB","4-3mailAccess.json")
+loginPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","1loginInfo.json")
+mailTriggerPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-1mailStart.json")
+mailACCPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-3mailAccess.json")
 def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
     #크롬 드라이버 옵션 설정
     from selenium import webdriver

@@ -2,8 +2,8 @@ import os
 import pandas as pd
 import time
 import pyautogui
-mailTriggerPath = os.path.join(os.path.dirname(__file__),"DB","4-1mailStart.json")
-hotLinePath = os.path.join(os.path.dirname(__file__),"DB","4-4hotLine.json")
+mailTriggerPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-1mailStart.json")
+hotLinePath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-4hotLine.json")
 def hotLine(Y=int) -> None:
     pyautogui.doubleClick(x=950,y=Y,interval=0.2)
     pyautogui.click(x=42,y=622,interval=0.2)
