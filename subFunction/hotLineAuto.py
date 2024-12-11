@@ -5,8 +5,8 @@ import pyautogui
 mailTriggerPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-1mailStart.json")
 hotLinePath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-4hotLine.json")
 def hotLine(Y=int) -> None:
-    pyautogui.doubleClick(x=950,y=Y,interval=0.2)
-    pyautogui.click(x=42,y=622,interval=0.2)
+    pyautogui.doubleClick(x=392,y=Y,interval=0.2)
+    pyautogui.click(x=567,y=631,interval=0.2)
     pyautogui.hotkey('ctrl','v')
     pyautogui.press("enter")
     pyautogui.press("esc")
