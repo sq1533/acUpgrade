@@ -50,6 +50,9 @@ def alarmCheck(page) -> None:
         A_li = soup.find('li',check).find(class_='new').find_parent('li')
         AI_alarm = A_li.find('dd').get_text().replace('●','<br>●')
         if any(i in AI_alarm for i in EXCEPT):pass
+        elif '자동정산 요청 거래 없음' in AI_alarm:
+            a = {"Alarm":[AI_alarm],"mid":["자동정산 요청 거래 없음"]}
+            postJson(a)
         elif '자동취소응답오류' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동취소응답오류"]}
             postJson(a)
