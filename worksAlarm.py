@@ -53,6 +53,8 @@ def alarmCheck(page) -> None:
         elif '자동정산 요청 거래 없음' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동정산 요청 거래 없음"]}
             postJson(a)
+        elif 'prcchk' in AI_alarm:
+            a = {"Alarm":[AI_alarm],"mid":["prcchk"]}
         elif '자동취소응답오류' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동취소응답오류"]}
             postJson(a)
