@@ -55,6 +55,7 @@ def alarmCheck(page) -> None:
             postJson(a)
         elif 'prcchk' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["prcchk"]}
+            postJson(a)
         elif '자동취소응답오류' in AI_alarm:
             a = {"Alarm":[AI_alarm],"mid":["자동취소응답오류"]}
             postJson(a)
