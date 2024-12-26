@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import json
 import streamlit as st
-from streamlit_extras.row import row
+
 from customs.custom import css
 #사이드바 제거
 st.markdown(css, unsafe_allow_html=True)
@@ -29,15 +29,15 @@ with tab1:
     if st.button(label="영문메일 전송"):
         pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
     #메일 정보 입력
-    bady1 = row(3, vertical_align="center")
+    bady1,empty = st.columns(spec=[1,2],gap="small",vertical_alignment="center")
     st.write("수신자")
-    bady2_1 = row([1,1,1,1], vertical_align="center")
+    bady2_1,bady2_2,bady2_3,bady2_4 = st.columns(spec=[1,1,1,1],gap="small",vertical_alignment="center")
     st.write("참조자")
-    bady2_2 = row([1], vertical_align="center")
-    bady3 = row([2,1,1], vertical_align="center")
-    bady4 = row([1,1], vertical_align="center")
-    bady5 = row([1,1], vertical_align="center")
-    bady6 = row([1,1,1,1], vertical_align="center")
+    bady2_2 = st.columns(spec=[1],gap="small",vertical_alignment="center")
+    bady3,empty = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
+    bady4,empty = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
+    bady5,empty = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
+    bady6,empty = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
     #인증번호
     passN : str = bady1.text_input("pg_info 인증(장애안내)", max_chars=4)
     bady1.empty()
@@ -45,11 +45,11 @@ with tab1:
     #메일 수신자 선택
     if bady2_1.checkbox("간편 송금"):adr1 : str = recive["간편송금"]
     else:adr1 : str = ""
-    if bady2_1.checkbox("내통장결제"):adr2 : str = recive["내통장결제"]
+    if bady2_2.checkbox("내통장결제"):adr2 : str = recive["내통장결제"]
     else:adr2 : str = ""
-    if bady2_1.checkbox("PG"):adr3 : str = recive["PG"]
+    if bady2_3.checkbox("PG"):adr3 : str = recive["PG"]
     else:adr3 : str = ""
-    if bady2_1.checkbox("테스트"):adr4 : str = "mnt@hecto.co.kr"
+    if bady2_4.checkbox("테스트"):adr4 : str = "mnt@hecto.co.kr"
     else:adr4 : str = ""
     adr : str = f"{adr1},{adr2},{adr3},{adr4}"
     if bady2_2.checkbox("참조(해외영업팀, 서비스관리팀)",value=True):subadr : str = "t_291ts@hecto.co.kr, mnt@hecto.co.kr"
@@ -142,9 +142,9 @@ with tab2:
     #인증번호 입력
     if st.button(label="쿠칩메일 전송"):
         pd.DataFrame({"coochip":"start","enMail":"end","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
-    bady1 = row(3, vertical_align="center")
-    bady2_1 = row(1, vertical_align="center")
-    bady2_2 = row(1, vertical_align="center")
+    bady1,empty = st.columns(spec=[1,2],gap="small",vertical_alignment="center")
+    bady2_1 = st.columns(spec=[1],gap="small",vertical_alignment="center")
+    bady2_2 = st.columns(spec=[1],gap="small",vertical_alignment="center")
     passN : str = bady1.text_input("pg_info2 인증번호", max_chars=4)
     bady1.empty()
     bady1.empty()

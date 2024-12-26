@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import json
 import streamlit as st
+
 from customs.custom import css
 #사이드바 제거
 st.markdown(css, unsafe_allow_html=True)
