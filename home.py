@@ -27,7 +27,7 @@ def H_page() -> None:
     left, right = st.columns([2,1], vertical_alignment="top")
     with left.expander(label="조회",expanded=False):
         mid = st.text_input("MID조회(입력 후 Enter)")
-        if st.button("조회"):
+        if st.button("조회") or mid:
             if mid in midList:
                 st.write(midInfo.loc[midInfo['mid']==mid]['info'].tolist()[0].replace("<br>","  \n"))
                 st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
