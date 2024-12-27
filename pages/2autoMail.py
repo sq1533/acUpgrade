@@ -30,13 +30,13 @@ tab1,tab2 = st.tabs(["영문메일 전송","쿠칩메일 전송"])
 with tab1:
     #인증번호 입력
     if st.button(label="영문메일 전송"):
-        pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
+        pd.DataFrame({"coochip":"end","enMail":"start","hotline":"end"},index=[0]).to_json('C:\\Users\\USER\\ve_1\\acUpgrade\\DB\\4-1mailStart.json',orient='records',force_ascii=False,indent=4)
     #메일 정보 입력
     bady1,empty = st.columns(spec=[1,2],gap="small",vertical_alignment="center")
     st.write("수신자")
     bady2_1,bady2_2,bady2_3,bady2_4 = st.columns(spec=[1,1,1,1],gap="small",vertical_alignment="center")
     st.write("참조자")
-    subSend_1 = st.checkbox("참조(해외영업팀, 서비스관리팀)")
+    subSend_1 = st.checkbox("참조(해외영업팀, 서비스관리팀)",value=True)
     bady3_1,bady3_2,bady3_3 = st.columns(spec=[2,1,1],gap="small",vertical_alignment="center")
     bady4_1,bady4_2 = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
     bady5_1,bady5_2 = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
@@ -44,17 +44,27 @@ with tab1:
     #인증번호
     passN : str = bady1.text_input("pg_info 인증(장애안내)", max_chars=4)
     #메일 수신자 선택
-    if bady2_1.checkbox("간편 송금"):adr1 : str = recive["간편송금"]
-    else:adr1 : str = ""
-    if bady2_2.checkbox("내통장결제"):adr2 : str = recive["내통장결제"]
-    else:adr2 : str = ""
-    if bady2_3.checkbox("PG"):adr3 : str = recive["PG"]
-    else:adr3 : str = ""
-    if bady2_4.checkbox("테스트"):adr4 : str = "mnt@hecto.co.kr"
-    else:adr4 : str = ""
+    if bady2_1.checkbox("간편 송금"):
+        adr1 : str = recive["간편송금"]
+    else:
+        adr1 : str = ""
+    if bady2_2.checkbox("내통장결제"):
+        adr2 : str = recive["내통장결제"]
+    else:
+        adr2 : str = ""
+    if bady2_3.checkbox("PG"):
+        adr3 : str = recive["PG"]
+    else:
+        adr3 : str = ""
+    if bady2_4.checkbox("테스트"):
+        adr4 : str = "mnt@hecto.co.kr"
+    else:
+        adr4 : str = ""
     adr : str = f"{adr1},{adr2},{adr3},{adr4}"
-    if subSend_1:subadr : str = "t_291ts@hecto.co.kr, mnt@hecto.co.kr"
-    else:subadr : str = ""
+    if subSend_1:
+        subadr : str = "t_291ts@hecto.co.kr, mnt@hecto.co.kr"
+    else:
+        subadr : str = ""
     S = []
     O = ""
     #서비스, 원천사 선택
@@ -64,10 +74,12 @@ with tab1:
     S = " | ".join(S)
     bank_select = bady3_2.selectbox("은행선택",(list(bank.keys())))
     pg_select = bady3_3.selectbox("PG선택", (list(pg.keys())))
-    if bank_select == "선택":bank_select = ""
+    if bank_select == "선택":
+        bank_select : str = ""
     else:
         O = bank[bank_select]
-    if pg_select == "선택":pg_select = ""
+    if pg_select == "선택":
+        pg_select : str = ""
     else:
         O = pg[pg_select]
     error_DAY1 = str(bady4_1.date_input("시작 시간",(datetime.now()),format="YYYY-MM-DD"))
@@ -106,7 +118,7 @@ Thank you.
         sendMail()
         with st.spinner('전송중....'):
             time.sleep(10)
-        st.success('메일전송 완료')
+        st.success('메일함을 확인해주세요')
     if bady6_2.button(label="정상안내"):
         T = error_DAY+"("+error_MtoS+")"+" "+error_TIME+" ~ "+clear_DAY+"("+clear_MtoS+")"+" "+clear_TIME
         title = "[{s}] {o} Error Recovery Notice ({t})".format(s=S,o=O,t=T)
@@ -136,7 +148,7 @@ Thank you.
         sendMail()
         with st.spinner('전송중....'):
             time.sleep(10)
-        st.success('메일전송 완료')
+        st.success('메일함을 확인해주세요')
 with tab2:
     #인증번호 입력
     if st.button(label="쿠칩메일 전송"):
@@ -165,4 +177,4 @@ with tab2:
         sendMail()
         with st.spinner('전송중....'):
             time.sleep(10)
-        st.success('메일전송 완료')
+        st.success('메일함을 확인해주세요')
