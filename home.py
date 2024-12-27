@@ -40,7 +40,7 @@ def H_page() -> None:
     #실시간 알람 불러오기
     components.iframe(url,width=650,height=3000)
     with st.sidebar:
-        stoKey = st.selectbox("핫라인 전파",list(order['hotLine'].keys()))
+        stoKey = st.selectbox("원천사 이슈 전파",list(order['hotLine'].keys()))
         line = order["hotLine"][stoKey]
         ment = st.radio("장애내용",("지연중입니다.","간헐적 지연중입니다.","개시지연중입니다.","정상화 되었습니다."))
         fixed = stoKey+' '+ment
