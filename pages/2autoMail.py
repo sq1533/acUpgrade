@@ -42,7 +42,7 @@ with tab1:
     bady5_1,bady5_2 = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
     bady6_1,bady6_2 = st.columns(spec=[1,1],gap="small",vertical_alignment="center")
     #인증번호
-    passN : str = bady1.text_input("pg_info 인증(장애안내)", max_chars=4)
+    passN : str = bady1.text_input("pg_info 인증번호", max_chars=4)
     #메일 수신자 선택
     if bady2_1.checkbox("간편 송금"):
         adr1 : str = recive["간편송금"]
