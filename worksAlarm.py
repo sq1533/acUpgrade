@@ -139,7 +139,7 @@ class category:
                 category.postJson(a)
 
     #알람데이터 json파일 저장
-    def postJson(self,newalarm:dict) -> None:
+    def postJson(newalarm:dict) -> None:
         AR = pd.read_json(alarmPath,orient='records',dtype={'Alarm':str,'mid':str})
         add = pd.DataFrame(newalarm,index=[0])
         AR.drop([0],axis=0,inplace=True)
@@ -154,7 +154,6 @@ def main():
     options.add_argument("--headless")
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-extensions')
-    options.add_argument('--blink-settings=imagesEnabled=false')
     driver = webdriver.Chrome(options=options)
     try:
         driver.get("https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com%2F")

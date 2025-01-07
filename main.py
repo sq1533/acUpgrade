@@ -7,148 +7,54 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 import database
+
 midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
 alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
+
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")
-#homePage
-@app.get("/home",response_class=HTMLResponse)
-async def home(request:Request):
-    return templates.TemplateResponse("home.html",{"request":request})
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),"templates"))
+
 #URL 정제
 def urls_to_links(text):
     url = r'(https?://[^\s<]+)'
     return re.sub(url,r'<a href="\1" target="_blank">\1</a>',text)
-#alarm 1번
-@app.get("/alarm_1")
-def alarm_1():
+
+#homePage
+@app.get("/home",response_class=HTMLResponse)
+async def home(request:Request):
+    return templates.TemplateResponse("home.html",{"request":request})
+
+#alarm
+@app.get("/alarm_{number}")
+def alarm_1(number:int):
     alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    links = urls_to_links(alarm.iloc[-1]['Alarm'])
+    links = urls_to_links(alarm.iloc[-number]['Alarm'])
     return HTMLResponse(content=links)
-@app.get("/alarm_1_info")
-def alarm_1_info():
+
+#alarm 정보
+@app.get("/alarmInfo_{number}")
+def alarm_info(number:int):
     alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
-    if alarm.iloc[-1]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-1]['mid']])]['info'].reset_index(drop=True)[0])
+    if alarm.iloc[-number]['mid'] in midList:
+        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-number]['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = str(f"{alarm.iloc[-1]['mid']} DB생성 필요")
+        midInfo = str(f"{alarm.iloc[-number]['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
-@app.get("/alarm_1_char")
-def alarm_1_info():
+
+#alarm 담당자
+@app.get("/alarmChar_{number}")
+def alarm_chcr(number:int):
     alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
-    if alarm.iloc[-1]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-1]['mid']])]['char'].reset_index(drop=True)[0]
+    if alarm.iloc[-number]['mid'] in midList:
+        midChar = info[info['mid'].isin([alarm.iloc[-number]['mid']])]['char'].reset_index(drop=True)[0]
     else:
         midChar = "none"
     return HTMLResponse(content=midChar)
-#alarm 2번
-@app.get("/alarm_2")
-def alarm_2():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    links = urls_to_links(alarm.iloc[-2]['Alarm'])
-    return HTMLResponse(content=links)
-@app.get("/alarm_2_info")
-def alarm_2_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-2]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-2]['mid']])]['info'].reset_index(drop=True)[0])
-    else:
-        midInfo = str(f"{alarm.iloc[-2]['mid']} DB생성 필요")
-    return HTMLResponse(content=midInfo)
-@app.get("/alarm_2_char")
-def alarm_2_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-2]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-2]['mid']])]['char'].reset_index(drop=True)[0]
-    else:
-        midChar = "none"
-    return HTMLResponse(content=midChar)
-#alarm 3번
-@app.get("/alarm_3")
-def alarm_3():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    links = urls_to_links(alarm.iloc[-3]['Alarm'])
-    return HTMLResponse(content=links)
-@app.get("/alarm_3_info")
-def alarm_3_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-3]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-3]['mid']])]['info'].reset_index(drop=True)[0])
-    else:
-        midInfo = str(f"{alarm.iloc[-3]['mid']} DB생성 필요")
-    return HTMLResponse(content=midInfo)
-@app.get("/alarm_3_char")
-def alarm_3_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-3]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-3]['mid']])]['char'].reset_index(drop=True)[0]
-    else:
-        midChar = "none"
-    return HTMLResponse(content=midChar)
-#alarm 4번
-@app.get("/alarm_4")
-def alarm_4():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    links = urls_to_links(alarm.iloc[-4]['Alarm'])
-    return HTMLResponse(content=links)
-@app.get("/alarm_4_info")
-def alarm_4_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-4]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-4]['mid']])]['info'].reset_index(drop=True)[0])
-    else:
-        midInfo = str(f"{alarm.iloc[-4]['mid']} DB생성 필요")
-    return HTMLResponse(content=midInfo)
-@app.get("/alarm_4_char")
-def alarm_4_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-4]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-4]['mid']])]['char'].reset_index(drop=True)[0]
-    else:
-        midChar = "none"
-    return HTMLResponse(content=midChar)
-#alarm 5번
-@app.get("/alarm_5")
-def alarm_5():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    links = urls_to_links(alarm.iloc[-5]['Alarm'])
-    return HTMLResponse(content=links)
-@app.get("/alarm_5_info")
-def alarm_5_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-5]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-5]['mid']])]['info'].reset_index(drop=True)[0])
-    else:
-        midInfo = str(f"{alarm.iloc[-5]['mid']} DB생성 필요")
-    return HTMLResponse(content=midInfo)
-@app.get("/alarm_5_char")
-def alarm_5_info():
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarm.iloc[-5]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-5]['mid']])]['char'].reset_index(drop=True)[0]
-    else:
-        midChar = "none"
-    return HTMLResponse(content=midChar)
+
 #데이터 설정
 class mk(BaseModel):
     mid : str
@@ -162,6 +68,7 @@ class mail(BaseModel):
     subaddr : str
     title : str
     main : str
+
 #생성
 @app.post("/mk_info")
 async def create(response: mk):
@@ -181,4 +88,4 @@ async def sendMail(response: mail):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app,host="0.0.0.0",port=8000)
+    uvicorn.run(app,host="0.0.0.0",port=8501)
