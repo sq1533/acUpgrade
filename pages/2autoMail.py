@@ -11,7 +11,7 @@ from customs.custom import css
 st.markdown(css, unsafe_allow_html=True)
 #메일 DB저장
 def sendMail():
-    requests.post("http://127.0.0.1:8000/email",json.dumps(email))
+    requests.post("http://127.0.0.1:8501/email",json.dumps(email))
 #DB데이터 불러오기
 mailTriggerPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-1mailStart.json")
 mailInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","4-2mailInfo.json")

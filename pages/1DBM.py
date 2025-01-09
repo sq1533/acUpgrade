@@ -12,8 +12,8 @@ midInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB",
 midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
 midList = midInfo['mid'].tolist()
 #DB수정 API
-url = "http://127.0.0.1:8000/mk_info"
-url_d = "http://127.0.0.1:8000/mk_info_d"
+url = "http://127.0.0.1:8501/mk_info"
+url_d = "http://127.0.0.1:8501/mk_info_d"
 def create():
     requests.post(url,json.dumps(mk_info))
 def change():
