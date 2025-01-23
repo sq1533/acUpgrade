@@ -17,12 +17,12 @@ with open(loginPath,'r',encoding="UTF-8") as f:
 works_login = pd.Series(login['works'])
 
 #알람데이터 json파일 저장
-def postJson(newalarm:dict):
+def postJson(newalarm:dict) -> None:
     AR = pd.read_json(alarmPath,orient='records',dtype={'Alarm':str,'mid':str})
     AR.drop([0],axis=0,inplace=True)
     add = pd.DataFrame(newalarm,index=[0])
     con = pd.concat([AR,add],ignore_index=True)
-    return con.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
+    con.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
 
 #분류 데이터 생성
 class category:
@@ -63,8 +63,7 @@ class category:
             new_alarm = new_alarm.find_parent('li').find('dd').get_text().replace('●','<br>●')
             category.ALARM(self,new_alarm)
             page.find_element(By.CLASS_NAME,'chat_list').find_element(By.CLASS_NAME,'new').click()
-            page.refresh()
-            time.sleep(1.5)
+            page.find_elements(By.CLASS_NAME,'item_chat')[8].find_element(By.CLASS_NAME,'chat_cont_area').click()
 
     #알람 분류
     def ALARM(self,alarm) -> None:
@@ -72,63 +71,63 @@ class category:
                 pass
             elif '자동정산 요청 거래 없음' in alarm:
                 a = {"Alarm":[alarm],"mid":["자동정산 요청 거래 없음"]}
-                return postJson(a)
+                postJson(a)
             elif 'prcchk' in alarm:
                 a = {"Alarm":[alarm],"mid":["prcchk"]}
-                return postJson(a)
+                postJson(a)
             elif '자동취소응답오류' in alarm:
                 a = {"Alarm":[alarm],"mid":["자동취소응답오류"]}
-                return postJson(a)
+                postJson(a)
             elif '정산 정보 없음' in alarm:
                 a = {"Alarm":[alarm],"mid":["정산 정보 없음"]}
-                return postJson(a)
+                postJson(a)
             elif 'vavsreceipt' in alarm:
                 a = {"Alarm":[alarm],"mid":["vavsreceipt"]}
-                return postJson(a)
+                postJson(a)
             elif '현금영수증' in alarm:
                 a = {"Alarm":[alarm],"mid":["현금영수증"]}
-                return postJson(a)
+                postJson(a)
             elif 'autocancel' in alarm:
                 a = {"Alarm":[alarm],"mid":["autocancel"]}
-                return postJson(a)
+                postJson(a)
             elif '거래없음[' in alarm:
                 a = {"Alarm":[alarm],"mid":["VAN거래없음"]}
-                return postJson(a)
+                postJson(a)
             elif '은행 잔액 부족' in alarm:
                 a = {"Alarm":[alarm],"mid":["은행 잔액 부족"]}
-                return postJson(a)
+                postJson(a)
             elif '응답지연' in alarm or '응답 지연' in alarm:
                 a = {"Alarm":[alarm],"mid":["응답지연"]}
-                return postJson(a)
+                postJson(a)
             elif '/미처리' in alarm:
                 a = {"Alarm":[alarm],"mid":["미처리"]}
-                return postJson(a)
+                postJson(a)
             elif ')장애발생' in alarm:
                 a = {"Alarm":[alarm],"mid":["VAN가상장애"]}
-                return postJson(a)
+                postJson(a)
             elif 'VDBE' in alarm:
                 a = {"Alarm":[alarm],"mid":["VDBE"]}
-                return postJson(a)
+                postJson(a)
             elif '큐확인요망' in alarm:
                 preAlarm = alarm.split(' ')
                 Firm_code = preAlarm[1]
                 a = {"Alarm":[alarm],"mid":[Firm_code]}
-                return postJson(a)
+                postJson(a)
             elif 'VAN 20' in alarm:
                 preAlarm = alarm.split(' ')
                 vs_code = preAlarm[3]
                 a = {"Alarm":[alarm],"mid":[vs_code]}
-                return postJson(a)
+                postJson(a)
             elif 'CONNECT' in alarm:
                 preAlarm = re.search(r'\((\d+)\)',alarm)
                 vs_code = preAlarm.group(1)
                 a = {"Alarm":[alarm],"mid":[vs_code]}
-                return postJson(a)
+                postJson(a)
             elif 'TIME' in alarm:
                 preAlarm = re.search(r'\((\d+)\)',alarm)
                 vs_code = preAlarm.group(1)
                 a = {"Alarm":[alarm],"mid":[vs_code]}
-                return postJson(a)
+                postJson(a)
             #AI_MON 알람
             elif any(i in alarm for i in self.target_simple):
                 MID_1 = alarm.split('가맹점:')
@@ -136,24 +135,24 @@ class category:
                 MID_3 = MID_2[1].split(']',1)
                 MID = MID_3[0]
                 a = {"Alarm":[alarm],"mid":[MID]}
-                return postJson(a)
+                postJson(a)
             elif any(i in alarm for i in self.target_error):
                 AI = alarm.replace(' ','')
                 MID_1 = AI.split('오류코드:')
                 MID_2 = MID_1[1].split('(',1)
                 code = str(MID_2[0])
                 a = {"Alarm":[alarm],"mid":[code]}
-                return postJson(a)
+                postJson(a)
             else:
                 a = {"Alarm":[alarm],"mid":["확인필요"]}
-                return postJson(a)
+                postJson(a)
 
 autoAlarm = category()
 
 #구동
 def main():
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
     options.add_argument('--disable-gpu')
     options.add_argument('--disable-extensions')
     driver = webdriver.Chrome(options=options)
@@ -168,4 +167,5 @@ def main():
         driver.quit()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-if __name__ == "__main__":main()
+if __name__ == "__main__":
+    main()
