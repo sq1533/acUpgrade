@@ -62,8 +62,8 @@ class category:
                     alarmBF.drop([0],axis=0,inplace=True)
                     newAlarm = pd.DataFrame([{'Alarm':alarmText,'date':date}])
                     alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-                    alarmResults = alarmAF.sort_values('date')
-                    alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
+                    #alarmResults = alarmAF.sort_values('date')
+                    alarmAF.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
 
 autoAlarm = category()
 
