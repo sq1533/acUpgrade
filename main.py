@@ -39,21 +39,21 @@ def alarm_1(number:int):
 #alarm 정보
 @app.get("/alarmInfo_{number}")
 def alarm_info(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]["Alarm"]
     if any(i in alarm for i in target_simple):
         MID_1 = alarm.split('가맹점:')
         MID_2 = MID_1[1].split('[',1)
         MID_3 = MID_2[1].split(']',1)
         MID = MID_3[0]
-        alarmAF = {"Alarm":[alarm],"mid":[MID]}
+        alarmAF = {"Alarm":alarm,"mid":MID}
     elif any(i in alarm for i in target_error):
         AI = alarm.replace(' ','')
         MID_1 = AI.split('오류코드:')
         MID_2 = MID_1[1].split('(',1)
         code = str(MID_2[0])
-        alarmAF = {"Alarm":[alarm],"mid":[code]}
+        alarmAF = {"Alarm":alarm,"mid":code}
     else:
-        alarmAF = {"Alarm":[alarm],"mid":"None"}
+        alarmAF = {"Alarm":alarm,"mid":"None"}
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
     if alarmAF['mid'] in midList:
@@ -65,21 +65,21 @@ def alarm_info(number:int):
 #alarm 담당자
 @app.get("/alarmChar_{number}")
 def alarm_chcr(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]["Alarm"]
     if any(i in alarm for i in target_simple):
         MID_1 = alarm.split('가맹점:')
         MID_2 = MID_1[1].split('[',1)
         MID_3 = MID_2[1].split(']',1)
         MID = MID_3[0]
-        alarmAF = {"Alarm":[alarm],"mid":[MID]}
+        alarmAF = {"Alarm":alarm,"mid":MID}
     elif any(i in alarm for i in target_error):
         AI = alarm.replace(' ','')
         MID_1 = AI.split('오류코드:')
         MID_2 = MID_1[1].split('(',1)
         code = str(MID_2[0])
-        alarmAF = {"Alarm":[alarm],"mid":[code]}
+        alarmAF = {"Alarm":alarm,"mid":code}
     else:
-        alarmAF = {"Alarm":[alarm],"mid":"None"}
+        alarmAF = {"Alarm":alarm,"mid":"None"}
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
     if alarmAF['mid'] in midList:
