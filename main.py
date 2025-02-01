@@ -11,6 +11,11 @@ import database
 midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
 alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
 
+#AI_MON simple 알람 타켓
+target_simple = [':거래없음',':거래감소',':거래(성공건)없음',':거래급증',':거래(오류)급증',':성공율 하락',':비정상환불',':비정상취소']
+#AI_MON error 알람 타켓
+target_error = [':동일오류',':오류발생']
+
 app = FastAPI()
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__),"templates"))
 
@@ -27,33 +32,61 @@ async def home(request:Request):
 #alarm
 @app.get("/alarm_{number}")
 def alarm_1(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str})
     links = urls_to_links(alarm.iloc[-number]['Alarm'])
     return HTMLResponse(content=links)
 
 #alarm 정보
 @app.get("/alarmInfo_{number}")
 def alarm_info(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]
+    if any(i in alarm for i in target_simple):
+        MID_1 = alarm.split('가맹점:')
+        MID_2 = MID_1[1].split('[',1)
+        MID_3 = MID_2[1].split(']',1)
+        MID = MID_3[0]
+        alarmAF = {"Alarm":[alarm],"mid":[MID]}
+    elif any(i in alarm for i in target_error):
+        AI = alarm.replace(' ','')
+        MID_1 = AI.split('오류코드:')
+        MID_2 = MID_1[1].split('(',1)
+        code = str(MID_2[0])
+        alarmAF = {"Alarm":[alarm],"mid":[code]}
+    else:
+        alarmAF = {"Alarm":[alarm],"mid":"None"}
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
-    if alarm.iloc[-number]['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarm.iloc[-number]['mid']])]['info'].reset_index(drop=True)[0])
+    if alarmAF['mid'] in midList:
+        midInfo = urls_to_links(info[info['mid'].isin([alarmAF['mid']])]['info'].reset_index(drop=True)[0])
     else:
-        midInfo = str(f"{alarm.iloc[-number]['mid']} DB생성 필요")
+        midInfo = str(f"{alarmAF['mid']} DB생성 필요")
     return HTMLResponse(content=midInfo)
 
 #alarm 담당자
 @app.get("/alarmChar_{number}")
 def alarm_chcr(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"mid":str,"URL":str})
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]
+    if any(i in alarm for i in target_simple):
+        MID_1 = alarm.split('가맹점:')
+        MID_2 = MID_1[1].split('[',1)
+        MID_3 = MID_2[1].split(']',1)
+        MID = MID_3[0]
+        alarmAF = {"Alarm":[alarm],"mid":[MID]}
+    elif any(i in alarm for i in target_error):
+        AI = alarm.replace(' ','')
+        MID_1 = AI.split('오류코드:')
+        MID_2 = MID_1[1].split('(',1)
+        code = str(MID_2[0])
+        alarmAF = {"Alarm":[alarm],"mid":[code]}
+    else:
+        alarmAF = {"Alarm":[alarm],"mid":"None"}
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
     midList = info['mid'].tolist()
-    if alarm.iloc[-number]['mid'] in midList:
-        midChar = info[info['mid'].isin([alarm.iloc[-number]['mid']])]['char'].reset_index(drop=True)[0]
+    if alarmAF['mid'] in midList:
+        midInfo = urls_to_links(info[info['mid'].isin([alarmAF['mid']])]['char'].reset_index(drop=True)[0])
     else:
-        midChar = "none"
-    return HTMLResponse(content=midChar)
+        midInfo = "none"
+    return HTMLResponse(content=midInfo)
 
 #데이터 설정
 class mk(BaseModel):
