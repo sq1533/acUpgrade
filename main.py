@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import re
+import datetime
 from fastapi import FastAPI,Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -8,8 +9,9 @@ from pydantic import BaseModel
 
 import database
 
+now = datetime.date.today()
+alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{now.strftime("%m%d")}.json")
 midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
-alarmPath = os.path.join(os.path.dirname(__file__),"DB","3worksAlarm.json")
 
 #AI_MON simple 알람 타켓
 target_simple = [':거래없음',':거래감소',':거래(성공건)없음',':거래급증',':거래(오류)급증',':성공율 하락',':비정상환불',':비정상취소']
