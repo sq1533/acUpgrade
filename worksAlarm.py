@@ -56,10 +56,13 @@ class category:
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date])
-        newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date"])
-        alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-        alarmResults = alarmAF.sort_values('date')
-        alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
+        if blink != []:
+            newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date"])
+            alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
+            alarmResults = alarmAF.sort_values('date')
+            alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
+        else:
+            pass
 
 #class 정의
 autoAlarm = category()
