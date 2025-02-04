@@ -25,10 +25,8 @@ def postJson(newalarm:dict) -> None:
 
 #분류 데이터 생성
 class category:
-    #기준 고정값
     def __init__(self):
-        self.roomName = ["<AI_MON:PG>","<AI_MON:VAN>","<AI_MON:성공율하락>","<AI_MON:거래감소>","<AI_MON:Error>","<AI_MON:거래급증>"]\
-
+        self.roomName = ["<AI_MON:PG>","<AI_MON:VAN>","<AI_MON:성공율하락>","<AI_MON:거래감소>","<AI_MON:Error>","<AI_MON:거래급증>"]
     #페이지 로그인
     def getHome(self,page) -> None:
         #로그인 정보입력(아이디)
@@ -47,45 +45,60 @@ class category:
 
     #알람데이터 크롤링
     def newAlarm(self,page) -> None:
+        blink = []
+        alarmBF = pd.read_json(alarmPath,orient='records',dtype={'Alarm':str,'date':str})
         for rooms in self.roomName:
             page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
-            time.sleep(1)
+            time.sleep(0.1)
+            page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
+            time.sleep(2)
             soup = BeautifulSoup(page.page_source,'html.parser')
             alarms = soup.find_all('div',class_="msg_lft msg_wrap")
-            for div in alarms[-(alarms.__len__()/2):-1]:
-                alarmBF = pd.read_json(alarmPath,orient='records',dtype={'Alarm':str,'date':str})
+            lens = alarms.__len__()
+            for div in range(lens-1,int(lens/2),-1):
                 alarmIndex = alarmBF["Alarm"].tolist()
-                alarmText = div.find('div',class_="msg_box").get_text().replace('●','<br>●')
+                alarmText = alarms[div].find('div',class_="msg_box").get_text().replace('●','<br>●')
                 if alarmText in alarmIndex:
                     pass
                 elif '◎' in alarmText:
                     pass
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
-                    alarmBF.drop([0],axis=0,inplace=True)
-                    newAlarm = pd.DataFrame([{'Alarm':alarmText,'date':date}])
-                    alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-                    alarmResults = alarmAF.sort_values('date')
-                    alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
+                    blink.append([alarmText,date])
+        newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date"])
+        alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
+        alarmResults = alarmAF.sort_values('date')
+        alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
 
 autoAlarm = category()
 
 #구동
 def main():
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
-    options.add_argument('--disable-gpu')
-    options.add_argument('--disable-extensions')
-    driver = webdriver.Chrome(options=options)
-    driver.get("https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com%2F")
-    autoAlarm.getHome(driver)
     try:
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        options.add_argument('--disable-gpu')
+        options.add_argument('--disable-extensions')
+        driver = webdriver.Chrome(options=options)
+        driver.get("https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com%2F")
+        autoAlarm.getHome(driver)
+        max_runtime = 18000
+        start_time = time.time()
         while True:
+            print(int(time.time()-start_time))
             autoAlarm.newAlarm(driver)
             time.sleep(0.1)
-    except:
-        time.sleep(1)
+            if (time.time()-start_time) >= max_runtime:
+                time.sleep(1)
+                driver.quit()
+                break
+            else:
+                pass
+        os.execl(sys.executable, sys.executable, *sys.argv)
+    except Exception as ec:
+        print(ec)
         driver.quit()
+        time.sleep(1)
         os.execl(sys.executable, sys.executable, *sys.argv)
 
 if __name__ == "__main__":
