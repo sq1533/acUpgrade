@@ -43,8 +43,6 @@ class category:
         alarmIndex = alarmBF["Alarm"].tolist()
         for rooms in self.roomName:
             page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
-            time.sleep(0.1)
-            page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
             time.sleep(2)
             soup = BeautifulSoup(page.page_source,'html.parser')
             alarms = soup.find_all('div',class_="msg_lft msg_wrap")
