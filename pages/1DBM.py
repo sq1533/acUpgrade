@@ -9,7 +9,7 @@ from customs.custom import css
 st.markdown(css, unsafe_allow_html=True)
 #데이터 불러오기
 midInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","2midInfo.json")
-midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
+midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})
 midList = midInfo['mid'].tolist()
 #DB수정 API
 url = "http://127.0.0.1:8501/mk_info"
@@ -26,11 +26,9 @@ with tab1:
     with st.form(key="mk_info"):
         mid: str = st.text_input("mid", max_chars=20)
         info: str = st.text_area("정보")
-        char: str = st.text_area("담당자")
         mk_info = {
             "mid":mid,
-            "info":info.replace('\n','<br>'),
-            "char":char.replace('\n','<br>')
+            "info":info.replace('\n','<br>')
         }
         btn_1 = st.form_submit_button(label="생성")
         if btn_1:
@@ -53,11 +51,9 @@ with tab2:
             swap = mid
         mid: str = st.text_input("mid",swap,max_chars=20)
         info: str = st.text_area("정보",midInfo.loc[midInfo['mid']==swap]['info'].tolist()[0].replace("<br>","\n"),height=250)
-        char: str = st.text_area("담당자",midInfo.loc[midInfo['mid']==swap]['char'].tolist()[0].replace("<br>","\n"),height=100)
         mk_ch = {
             "mid":mid,
-            "info":info.replace('\n','<br>'),
-            "char":char.replace('\n','<br>')
+            "info":info.replace('\n','<br>')
         }
         btn_3 = st.form_submit_button(label="수정")
         if btn_3:

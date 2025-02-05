@@ -9,8 +9,6 @@ from pydantic import BaseModel
 
 import database
 
-now = datetime.date.today()
-alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{now.strftime("%m%d")}.json")
 midInfoPath = os.path.join(os.path.dirname(__file__),"DB","2midInfo.json")
 
 #AI_MON simple 알람 타켓
@@ -34,67 +32,55 @@ async def home(request:Request):
 #alarm
 @app.get("/alarm_{number}")
 def alarm_1(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str})
-    links = urls_to_links(alarm.iloc[-number]['Alarm'])
-    return HTMLResponse(content=links)
-
-#alarm 정보
-@app.get("/alarmInfo_{number}")
-def alarm_info(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]["Alarm"]
-    if any(i in alarm for i in target_simple):
-        MID_1 = alarm.split('가맹점:')
-        MID_2 = MID_1[1].split('[',1)
-        MID_3 = MID_2[1].split(']',1)
-        MID = MID_3[0]
-        alarmAF = {"Alarm":alarm,"mid":MID}
-    elif any(i in alarm for i in target_error):
-        AI = alarm.replace(' ','')
-        MID_1 = AI.split('오류코드:')
-        MID_2 = MID_1[1].split('(',1)
-        code = str(MID_2[0])
-        alarmAF = {"Alarm":alarm,"mid":code}
-    else:
-        alarmAF = {"Alarm":alarm,"mid":"None"}
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
+    alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{datetime.date.today().strftime("%m%d")}.json")
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str,"check":str})
+    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})
     midList = info['mid'].tolist()
-    if alarmAF['mid'] in midList:
+    alarmData = urls_to_links(alarm.iloc[number]['Alarm'])
+    checkPoint = alarm.iloc[number]['check']
+    if checkPoint == "nonCheck":
+        checkMessage = "미완료"
+    else:
+        checkMessage = "완료"
+    if any(i in alarmData for i in target_simple):
+        MID_1 = alarmData.split('가맹점:')[1]
+        MID_2 = MID_1.split('[',1)[1]
+        MID = MID_2.split(']',1)[0]
+        alarmAF = {"Alarm":alarmData,"mid":MID}
+    elif any(i in alarmData for i in target_error):
+        AI = alarmData.replace(' ','')
+        MID_1 = AI.split('오류코드:')[1]
+        code = str(MID_1.split('(',1)[0])
+        alarmAF = {"Alarm":alarmData,"mid":code}
+    else:
+        alarmAF = {"Alarm":alarmData,"mid":"None"}
+    if alarmAF["mid"] in midList:
         midInfo = urls_to_links(info[info['mid'].isin([alarmAF['mid']])]['info'].reset_index(drop=True)[0])
     else:
         midInfo = str(f"{alarmAF['mid']} DB생성 필요")
-    return HTMLResponse(content=midInfo)
+    html = f"""
+            {alarmData}<br><br>
+            <li class='font-bold'>정보</li>
+            {midInfo}<br><br>
+            <div class='font-bold text-lg text-red-400'>{checkMessage}</div>
+            """
+    return HTMLResponse(content=html)
 
-#alarm 담당자
-@app.get("/alarmChar_{number}")
-def alarm_chcr(number:int):
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str}).iloc[-number]["Alarm"]
-    if any(i in alarm for i in target_simple):
-        MID_1 = alarm.split('가맹점:')
-        MID_2 = MID_1[1].split('[',1)
-        MID_3 = MID_2[1].split(']',1)
-        MID = MID_3[0]
-        alarmAF = {"Alarm":alarm,"mid":MID}
-    elif any(i in alarm for i in target_error):
-        AI = alarm.replace(' ','')
-        MID_1 = AI.split('오류코드:')
-        MID_2 = MID_1[1].split('(',1)
-        code = str(MID_2[0])
-        alarmAF = {"Alarm":alarm,"mid":code}
-    else:
-        alarmAF = {"Alarm":alarm,"mid":"None"}
-    info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
-    midList = info['mid'].tolist()
-    if alarmAF['mid'] in midList:
-        midInfo = urls_to_links(info[info['mid'].isin([alarmAF['mid']])]['char'].reset_index(drop=True)[0])
-    else:
-        midInfo = "none"
-    return HTMLResponse(content=midInfo)
+@app.post("/alarmCheck{number}")
+async def result(number:int,request:Request):
+    data = await request.form()
+    alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{datetime.date.today().strftime("%m%d")}.json")
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str,"check":str})
+    alarm.loc[number]['check'] = data["results"]
+    grouping = alarm.groupby('check')
+    alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
+    alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
+    return HTMLResponse(content="제출 완료")
 
 #데이터 설정
 class mk(BaseModel):
     mid : str
     info : str
-    char : str
 class mid(BaseModel):
     mid : str
 class mail(BaseModel):

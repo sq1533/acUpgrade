@@ -22,7 +22,7 @@ with open(sideBarPath,'r',encoding="UTF-8") as f:
 url = pd.Series(login_DB['IP'])['IP']+"/home"
 def H_page() -> None:
     #조회기능
-    midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str,"char":str})
+    midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})
     midList = midInfo['mid'].tolist()
     left, right = st.columns([2,1], vertical_alignment="top")
     with left.expander(label="조회",expanded=False):
@@ -30,7 +30,6 @@ def H_page() -> None:
         if st.button("조회") or mid:
             if mid in midList:
                 st.write(midInfo.loc[midInfo['mid']==mid]['info'].tolist()[0].replace("<br>","  \n"))
-                st.write(midInfo.loc[midInfo['mid']==mid]['char'].tolist()[0].replace("<br>","  \n"))
             else:
                 st.write('존재하지 않는 MID입니다.')
     #주요 서버 목록
@@ -38,7 +37,7 @@ def H_page() -> None:
         svr = st.selectbox("주요 서버 목록",order["server"],index=None)
         st.code(svr)
     #실시간 알람 불러오기
-    components.iframe(url,width=650,height=3000)
+    components.iframe(url,width=650,height=5000)
     with st.sidebar:
         stoKey = st.selectbox("원천사 이슈 전파",list(order['hotLine'].keys()))
         line = order["hotLine"][stoKey]
@@ -72,4 +71,5 @@ def H_page() -> None:
                 with st.spinner('구동중입니다.'):
                     time.sleep(4)
                     st.success('핫라인을 확인해주세요.')
-if __name__ == '__main__':H_page()
+if __name__ == '__main__':
+    H_page()
