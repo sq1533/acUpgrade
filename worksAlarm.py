@@ -101,7 +101,7 @@ def main():
             os.execl(sys.executable, sys.executable, *sys.argv)
     else:
         yesterdayData = pd.read_json(yesterdayAlarmPath,orient='records',dtype={'Alarm':str})
-        yesterdayData.tail(n=10).to_json(todayAlarmPath,orient='records',force_ascii=False,indent=4)
+        yesterdayData.head(n=10).to_json(todayAlarmPath,orient='records',force_ascii=False,indent=4)
 
 if __name__ == "__main__":
     while True:
