@@ -45,10 +45,10 @@ class category:
             page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
             time.sleep(2)
             soup = BeautifulSoup(page.page_source,'html.parser')
-            alarms = soup.find_all('div',class_="msg_lft msg_wrap")
+            alarms = soup.find_all('div',class_="msg_area")
             lens = alarms.__len__()
             for div in range(lens-1,int(lens/2),-1):
-                alarmText = alarms[div].find('div',class_="msg_box").get_text().replace('●','<br>●')
+                alarmText = alarms[div].find('div',class_="msg_box").getText().replace('●','<br>●')
                 if alarmText in alarmIndex:
                     pass
                 elif '◎' in alarmText:
