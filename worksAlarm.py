@@ -82,8 +82,8 @@ start_time = time.time()
 def main():
     now = datetime.date.today()
     yesterday = now - datetime.timedelta(days=1)
-    todayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{now.strftime("%m%d")}.json")
-    yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{yesterday.strftime("%m%d")}.json")
+    todayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{now.strftime("%y%m%d")}.json")
+    yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{yesterday.strftime("%y%m%d")}.json")
     if os.path.exists(todayAlarmPath):
         try:
             print(int(time.time()-start_time))
