@@ -59,10 +59,22 @@ def alarm_1(number:int):
     else:
         midInfo = str(f"{alarmAF['mid']} DB생성 필요")
     html = f"""
-            {alarmData}<br><br>
+            <div id="alarm{number}">{alarmData}</div>
+            <button id="alarm6Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm{number}')">알람 복사</button><br>
             <li class='font-bold'>정보</li>
             {midInfo}<br><br>
             <div class='font-bold text-lg text-red-400'>{checkMessage}</div>
+            <script>
+            function copyText(elementId) {{
+                var textElement = document.getElementById(elementId);
+                var tempTextArea = document.createElement("textarea");
+                tempTextArea.value = textElement.innerText;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempTextArea);
+            }};
+            </script>
             """
     return HTMLResponse(content=html)
 

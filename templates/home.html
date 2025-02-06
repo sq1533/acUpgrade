@@ -13,6 +13,16 @@
         <i id="modeIcon" class="material-symbols-outlined" style="font-size:32px;">wb_sunny</i>
     </button>
     <div id="bwGround" class="grid grid-cols-1 font-sans leading-normal space-y-3 bg-white">
+        <div id="alarm0Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600 text-black">
+            <div class="py-2 px-4 text-sm rounded-lg" hx-get="/alarm_0" hx-trigger="load, every 3s"></div>
+            <form hx-post="/alarmCheck0" hx-target="#callResults0" hx-swap="innerHTML" hx-boost="true">
+                <input type="radio" name="results" value="백오피스 조회결과 특이사항 없음"> 백오피스 조회결과 특이사항 없음<br>
+                <input type="radio" name="results" value="테스트 결과 특이사항 없음"> 테스트 결과 특이사항 없음<br>
+                <input type="radio" name="results" value="게시판"> 게시판<br>
+                <button class="w-full rounded-lg bg-green-300 font-bold text-black hover:bg-green-500" type="submit">제출</button>
+                <div id="callResults0"></div>
+            </form>
+        </div>
         <div id="alarm1Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600 text-sm text-black">
             <div class="py-2 px-4 rounded-lg" hx-get="/alarm_1" hx-trigger="load, every 3s"></div>
             <form hx-post="/alarmCheck1" hx-target="#callResults1" hx-swap="innerHTML" hx-boost="true">
@@ -103,16 +113,6 @@
                 <div id="callResults9"></div>
             </form>
         </div>
-        <div id="alarm10Box" class="rounded-lg ring-2 ring-offset-2 ring-green-600 text-black">
-            <div class="py-2 px-4 text-sm rounded-lg" hx-get="/alarm_10" hx-trigger="load, every 3s"></div>
-            <form hx-post="/alarmCheck10" hx-target="#callResults10" hx-swap="innerHTML" hx-boost="true">
-                <input type="radio" name="results" value="백오피스 조회결과 특이사항 없음"> 백오피스 조회결과 특이사항 없음<br>
-                <input type="radio" name="results" value="테스트 결과 특이사항 없음"> 테스트 결과 특이사항 없음<br>
-                <input type="radio" name="results" value="게시판"> 게시판<br>
-                <button class="w-full rounded-lg bg-green-300 font-bold text-black hover:bg-green-500" type="submit">제출</button>
-                <div id="callResults10"></div>
-            </form>
-        </div>
     </div>
 </body>
     <script>
@@ -149,7 +149,7 @@
             moodBtn.classList.replace(isDarkMode ? 'text-white' : 'text-black', isDarkMode ? 'text-black' : 'text-white');
             Icon.textContent = isDarkMode ? 'bedtime' : 'wb_sunny';
 
-            for (let i = 1; i <= alarmCount; i++) {
+            for (let i = 0; i <= alarmCount; i++) {
                 updateAlarmStyle(i, isDarkMode);
             }
         });
