@@ -33,7 +33,7 @@ async def home(request:Request):
 @app.get("/alarm_{number}")
 def alarm_1(number:int):
     alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{datetime.date.today().strftime("%y%m%d")}.json")
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str,"check":str})
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
     info = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})
     midList = info['mid'].tolist()
     alarmData = urls_to_links(alarm.iloc[number]['Alarm'])
@@ -81,7 +81,7 @@ def alarm_1(number:int):
 async def result(number:int,request:Request):
     data = await request.form()
     alarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{datetime.date.today().strftime("%y%m%d")}.json")
-    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"data":str,"check":str})
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
     alarm.loc[number]['check'] = data["results"]
     grouping = alarm.groupby('check')
     alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
