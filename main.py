@@ -60,8 +60,7 @@ def alarm_1(number:int):
         midInfo = str(f"{alarmAF['mid']} DB생성 필요")
     html = f"""
             <div id="alarm{number}">{alarmData}</div>
-            <button id="alarm6Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm{number}')">알람 복사</button><br>
-            <li class='font-bold'>정보</li>
+            <button id="alarm6Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm{number}')">알람 복사</button><br><br>
             {midInfo}<br><br>
             <div class='font-bold text-lg text-red-400'>{checkMessage}</div>
             <script>
