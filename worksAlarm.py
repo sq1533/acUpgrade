@@ -73,9 +73,9 @@ options.add_argument("--headless")
 options.add_argument('--disable-gpu')
 options.add_argument('--disable-extensions')
 driver = webdriver.Chrome(options=options)
-driver.get("https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com%2F")
+driver.get("https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Ftalk.worksmobile.com")
 autoAlarm.getHome(driver)
-max_runtime = 18000
+max_runtime = 7200
 start_time = time.time()
 
 #구동
