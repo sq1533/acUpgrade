@@ -20,29 +20,32 @@ text = cols4.text_input(label="포함된 단어")
 lookupButton = st.button(label="조회")
 
 if lookupButton:
-    lookupAlarm = []
-    lookupDate = []
+    blank = pandas.DataFrame(data={"Alarm":[],"date":[],"check":[]})
     dateRange = pandas.date_range(start=startDate,end=endDate,unit=None).strftime("%y%m%d").tolist()
     for date in dateRange:
         AlarmPath = os.path.join(os.path.dirname(__file__),"..","DB",f"3worksAlarm_{date}.json")
         if os.path.exists(AlarmPath):
             Data = pandas.read_json(AlarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
-            alarms = Data["Alarm"].tolist()
-            for alarm in alarms:
-                if any(i in alarm for i in categorys[index]):
-                    if text:
-                        if text in alarm:
-                            lookupAlarm.append(alarm.replace("<br>",""))
-                            lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
-                        else:
-                            pass
-                    else:
-                        lookupAlarm.append(alarm.replace("<br>",""))
-                        lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
-                else:
-                    pass
-            result = pandas.DataFrame(data={"date":lookupDate,"Alarm":lookupAlarm})
-            st.write(result)
+            newData = pandas.concat(objs=[blank,Data],ignore_index=True)
         else:
             st.error(f"{date} 알람 파일은 없습니다.")
             break
+    alarms = newData["Alarm"].tolist()
+    lookupAlarm = []
+    lookupDate = []
+    for alarm in alarms:
+        if any(i in alarm for i in categorys[index]):
+            if text:
+                if text in alarm:
+                    lookupAlarm.append(alarm.replace("<br>",""))
+                    lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
+                else:
+                    pass
+            else:
+                lookupAlarm.append(alarm.replace("<br>",""))
+                lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
+        else:
+            pass
+    result = pandas.DataFrame(data={"date":lookupDate,"Alarm":lookupAlarm})
+    filter = result.drop_duplicates(subset=["Alarm"])
+    st.write(filter)
