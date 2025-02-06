@@ -56,7 +56,7 @@ class category:
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date,"nonCheck"])
-        if blink != []:
+        if blink:
             newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date","check"])
             alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
             grouping = alarmAF.groupby('check')
