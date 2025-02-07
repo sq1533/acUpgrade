@@ -23,7 +23,7 @@ if lookupButton:
     blank = pandas.DataFrame(data={"Alarm":[],"date":[],"check":[]})
     dateRange = pandas.date_range(start=startDate,end=endDate,unit=None).strftime("%y%m%d").tolist()
     for date in dateRange:
-        AlarmPath = os.path.join(os.path.dirname(__file__),"..","DB",f"3worksAlarm_{date}.json")
+        AlarmPath = os.path.join(os.path.dirname(__file__),"..","Alarm",f"worksAlarm_{date}.json")
         if os.path.exists(AlarmPath):
             Data = pandas.read_json(AlarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
             newData = pandas.concat(objs=[blank,Data],ignore_index=True)

@@ -39,8 +39,6 @@ class category:
     #알람데이터 크롤링
     def newAlarm(self,page,path) -> None:
         blink = []
-        alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
-        alarmIndex = alarmBF["Alarm"].tolist()
         for rooms in self.roomName:
             page.find_element(By.XPATH,f'//strong[@title="{rooms}"]').click()
             time.sleep(2)
@@ -49,15 +47,16 @@ class category:
             lens = alarms.__len__()
             for div in range(lens-1,int(lens/2),-1):
                 alarmText = alarms[div].find('div',class_="msg_box").getText().replace('●','<br>●')
-                if alarmText in alarmIndex:
-                    pass
-                elif '◎' in alarmText:
+                if '◎' in alarmText:
                     pass
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date,"nonCheck"])
-        if blink:
-            newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date","check"])
+        alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
+        alarmIndex = alarmBF["Alarm"].tolist()
+        unique = [x for x in blink[0] if x[0] not in alarmIndex]
+        if unique:
+            newAlarm = pd.DataFrame(data=unique,columns=["Alarm","date","check"])
             alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
             grouping = alarmAF.groupby('check')
             alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
@@ -82,8 +81,8 @@ start_time = time.time()
 def main():
     now = datetime.date.today()
     yesterday = now - datetime.timedelta(days=1)
-    todayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{now.strftime("%y%m%d")}.json")
-    yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"DB",f"3worksAlarm_{yesterday.strftime("%y%m%d")}.json")
+    todayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{now.strftime("%y%m%d")}.json")
+    yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{yesterday.strftime("%y%m%d")}.json")
     if os.path.exists(todayAlarmPath):
         try:
             print(int(time.time()-start_time))
