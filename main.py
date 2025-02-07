@@ -39,9 +39,18 @@ def alarm_1(number:int):
     alarmData = urls_to_links(alarm.iloc[number]['Alarm'])
     checkPoint = alarm.iloc[number]['check']
     if checkPoint == "nonCheck":
-        checkMessage = "미완료"
+        checkMessage = f"""
+            <form hx-post="/alarmCheck{number}" hx-target="#callResults0" hx-swap="innerHTML" hx-boost="true">
+                <input type="radio" name="results" value="특이사항 없음"> 특이사항 없음<br>
+                <input type="radio" name="results" value="게시판"> 게시판<br>
+                <button class="w-1/2 rounded-lg bg-green-300 font-bold text-black hover:bg-green-500" type="submit">제출</button>
+                <div id="callResults0"></div>
+            </form>
+            """
+    elif checkPoint == "게시판":
+        checkMessage = "<div class='font-bold text-lg text-red-600'>게시판 작성</div>"
     else:
-        checkMessage = "완료"
+        checkMessage = "<div class='font-bold text-lg text-blue-400'>완료</div>"
     if any(i in alarmData for i in target_simple):
         MID_1 = alarmData.split('가맹점:')[1]
         MID_2 = MID_1.split('[',1)[1]
@@ -62,7 +71,7 @@ def alarm_1(number:int):
             <div id="alarm{number}">{alarmData}</div>
             <button id="alarm6Copy" class="w-full rounded-lg font-bold text-white bg-blue-500" onclick="copyText('alarm{number}')">알람 복사</button><br><br>
             {midInfo}<br><br>
-            <div class='font-bold text-lg text-red-400'>{checkMessage}</div>
+            {checkMessage}
             <script>
             function copyText(elementId) {{
                 var textElement = document.getElementById(elementId);
