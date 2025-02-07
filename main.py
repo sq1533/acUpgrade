@@ -40,7 +40,7 @@ def alarm_1(number:int):
     checkPoint = alarm.iloc[number]['check']
     if checkPoint == "nonCheck":
         checkMessage = f"""
-            <form hx-post="/alarmCheck{number}" hx-target="#callResults0" hx-swap="innerHTML" hx-boost="true">
+            <form class="text-base" hx-post="/alarmCheck{number}" hx-target="#callResults0" hx-swap="innerHTML" hx-boost="true">
                 <input type="radio" name="results" value="특이사항 없음"> 특이사항 없음<br>
                 <input type="radio" name="results" value="게시판"> 게시판<br>
                 <button class="w-1/2 rounded-lg bg-green-300 font-bold text-black hover:bg-green-500" type="submit">제출</button>
