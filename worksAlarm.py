@@ -52,17 +52,17 @@ class category:
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date,"nonCheck"])
-        alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
-        alarmIndex = alarmBF["Alarm"].tolist()
-        unique = [x for x in blink[0] if x[0] not in alarmIndex]
-        if unique:
-            newAlarm = pd.DataFrame(data=unique,columns=["Alarm","date","check"])
-            alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-            grouping = alarmAF.groupby('check')
-            alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
-            alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
-        else:
-            pass
+            alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
+            alarmIndex = alarmBF["Alarm"].tolist()
+            unique = [x for x in blink if x[0] not in alarmIndex]
+            if unique:
+                newAlarm = pd.DataFrame(data=unique,columns=["Alarm","date","check"])
+                alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
+                grouping = alarmAF.groupby('check')
+                alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
+                alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
+            else:
+                pass
 
 #class 정의
 autoAlarm = category()
