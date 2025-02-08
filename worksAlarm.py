@@ -80,9 +80,7 @@ start_time = time.time()
 #구동
 def main():
     now = datetime.date.today()
-    yesterday = now - datetime.timedelta(days=1)
     todayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{now.strftime("%y%m%d")}.json")
-    yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{yesterday.strftime("%y%m%d")}.json")
     if os.path.exists(todayAlarmPath):
         try:
             print(int(time.time()-start_time))
@@ -99,7 +97,9 @@ def main():
             time.sleep(1)
             os.execl(sys.executable, sys.executable, *sys.argv)
     else:
-        yesterdayData = pd.read_json(yesterdayAlarmPath,orient='records',dtype={'Alarm':str})
+        yesterday = now - datetime.timedelta(days=1)
+        yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{yesterday.strftime("%y%m%d")}.json")
+        yesterdayData = pd.read_json(yesterdayAlarmPath,orient='records',dtype={'Alarm':str,'date':str,'check':str})
         yesterdayData.head(n=10).to_json(todayAlarmPath,orient='records',force_ascii=False,indent=4)
 
 if __name__ == "__main__":
