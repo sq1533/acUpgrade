@@ -22,11 +22,12 @@ lookupButton = st.button(label="조회")
 if lookupButton:
     blank = pandas.DataFrame(data={"Alarm":[],"date":[],"check":[]})
     dateRange = pandas.date_range(start=startDate,end=endDate)
-    dateList = [date.strftime("%y%m%d") for date in dateRange]
+    dateList = [[date.strftime("%y%m%d"),date.strftime("%m/%d")] for date in dateRange]
     for jsonFile in dateList:
-        AlarmPath = os.path.join(os.path.dirname(__file__),"..","Alarm",f"worksAlarm_{jsonFile}.json")
+        AlarmPath = os.path.join(os.path.dirname(__file__),"..","Alarm",f"worksAlarm_{jsonFile[0]}.json")
         if os.path.exists(AlarmPath):
             Data = pandas.read_json(AlarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
+            Data = Data[Data["date"].str.contains(jsonFile[1])]
             blank = pandas.concat(objs=[blank,Data],ignore_index=True)
         else:
             st.error(f"{jsonFile} 알람 파일은 없습니다.")
@@ -35,9 +36,9 @@ if lookupButton:
     if text:
         textFilter = categorysFilter[categorysFilter["Alarm"].str.contains(text)]
         textFilter["Alarm"] = textFilter["Alarm"].str.replace("<br>","",regex=True)
-        result = textFilter.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"]).sort_values(by="date")
+        result = textFilter.sort_values(by="date")
         st.write(result)
     else:
         categorysFilter["Alarm"] = categorysFilter["Alarm"].str.replace("<br>","",regex=True)
-        result = categorysFilter.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"]).sort_values(by="date")
+        result = categorysFilter.sort_values(by="date")
         st.write(result)
