@@ -21,31 +21,23 @@ lookupButton = st.button(label="조회")
 
 if lookupButton:
     blank = pandas.DataFrame(data={"Alarm":[],"date":[],"check":[]})
-    dateRange = pandas.date_range(start=startDate,end=endDate,unit=None).strftime("%y%m%d").tolist()
-    for date in dateRange:
-        AlarmPath = os.path.join(os.path.dirname(__file__),"..","Alarm",f"worksAlarm_{date}.json")
+    dateRange = pandas.date_range(start=startDate,end=endDate)
+    dateList = [date.strftime("%y%m%d") for date in dateRange]
+    for jsonFile in dateList:
+        AlarmPath = os.path.join(os.path.dirname(__file__),"..","Alarm",f"worksAlarm_{jsonFile}.json")
         if os.path.exists(AlarmPath):
             Data = pandas.read_json(AlarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
-            newData = pandas.concat(objs=[blank,Data],ignore_index=True)
+            blank = pandas.concat(objs=[blank,Data],ignore_index=True)
         else:
-            st.error(f"{date} 알람 파일은 없습니다.")
+            st.error(f"{jsonFile} 알람 파일은 없습니다.")
             break
-    alarms = newData["Alarm"].tolist()
-    lookupAlarm = []
-    lookupDate = []
-    for alarm in alarms:
-        if any(i in alarm for i in categorys[index]):
-            if text:
-                if text in alarm:
-                    lookupAlarm.append(alarm.replace("<br>",""))
-                    lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
-                else:
-                    pass
-            else:
-                lookupAlarm.append(alarm.replace("<br>",""))
-                lookupDate.append(Data.loc[Data["Alarm"]==alarm,'date'].tolist()[0].split(' ')[0])
-        else:
-            pass
-    result = pandas.DataFrame(data={"date":lookupDate,"Alarm":lookupAlarm})
-    filter = result.drop_duplicates(subset=["Alarm"])
-    st.write(filter)
+    categorysFilter = blank[blank["Alarm"].str.contains("|".join(categorys[index]))]
+    if text:
+        textFilter = categorysFilter[categorysFilter["Alarm"].str.contains(text)]
+        textFilter["Alarm"] = textFilter["Alarm"].str.replace("<br>","",regex=True)
+        result = textFilter.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"]).sort_values(by="date")
+        st.write(result)
+    else:
+        categorysFilter["Alarm"] = categorysFilter["Alarm"].str.replace("<br>","",regex=True)
+        result = categorysFilter.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"]).sort_values(by="date")
+        st.write(result)

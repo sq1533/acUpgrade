@@ -52,17 +52,12 @@ class category:
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date,"nonCheck"])
+            newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date","check"])
             alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
-            alarmIndex = alarmBF["Alarm"].tolist()
-            unique = [x for x in blink if x[0] not in alarmIndex]
-            if unique:
-                newAlarm = pd.DataFrame(data=unique,columns=["Alarm","date","check"])
-                alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-                grouping = alarmAF.groupby('check')
-                alarmResults = grouping.apply(lambda x: x.sort_values(by='date',ascending=False)).reset_index(drop=True)
-                alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
-            else:
-                pass
+            alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
+            unique = alarmAF.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"])
+            alarmResults = unique.sort_values(by='date',ascending=False).reset_index(drop=True)
+            alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
 
 #class 정의
 autoAlarm = category()
@@ -98,9 +93,11 @@ def main():
             os.execl(sys.executable, sys.executable, *sys.argv)
     else:
         yesterday = now - datetime.timedelta(days=1)
+        dropData = now - datetime.timedelta(days=2)
         yesterdayAlarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{yesterday.strftime("%y%m%d")}.json")
         yesterdayData = pd.read_json(yesterdayAlarmPath,orient='records',dtype={'Alarm':str,'date':str,'check':str})
-        yesterdayData.head(n=10).to_json(todayAlarmPath,orient='records',force_ascii=False,indent=4)
+        todayData = yesterdayData[~yesterdayData['date'].str.contains(dropData.strftime("%m%d"),na=False)]
+        todayData.to_json(todayAlarmPath,orient='records',force_ascii=False,indent=4)
 
 if __name__ == "__main__":
     while True:
