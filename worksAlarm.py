@@ -52,12 +52,18 @@ class category:
                 else:
                     date = alarmText.split("<br>●실시간 상황")[0].split("●알람일시: ")[1]
                     blink.append([alarmText,date,"nonCheck"])
-            newAlarm = pd.DataFrame(data=blink,columns=["Alarm","date","check"])
             alarmBF = pd.read_json(path,orient='records',dtype={'Alarm':str,'date':str,'check':str})
-            alarmAF = pd.concat([alarmBF,newAlarm],ignore_index=True)
-            unique = alarmAF.sort_values(by="Alarm").drop_duplicates(subset=["Alarm"])
-            alarmResults = unique.sort_values(by='date',ascending=False).reset_index(drop=True)
-            alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
+            validateData1 = set([i[0] for i in blink])
+            validateData2 = set(alarmBF['Alarm'].tolist())
+            unique = list(validateData1 - validateData2)
+            if unique:
+                newdata = [alarm for alarm in blink if alarm[0] in unique]
+                new = pd.DataFrame(data=newdata,columns=["Alarm","date","check"])
+                alarmAF = pd.concat([alarmBF,new],ignore_index=True)
+                alarmResults = alarmAF.sort_values(by='date',ascending=False).reset_index(drop=True)
+                alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
+            else:
+                pass
 
 #class 정의
 autoAlarm = category()
