@@ -96,6 +96,16 @@ async def result(number:int,request:Request):
     alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
     return HTMLResponse(content="제출 완료")
 
+@app.post("/allCheck")
+async def result(request:Request):
+    data = await request.form()
+    alarmPath = os.path.join(os.path.dirname(__file__),"Alarm",f"worksAlarm_{datetime.date.today().strftime("%y%m%d")}.json")
+    alarm = pd.read_json(alarmPath,orient="records",dtype={"Alarm":str,"date":str,"check":str})
+    alarm["check"] = alarm["check"].replace("nonCheck",data["check"])
+    alarmResults = alarm.sort_values(by='date',ascending=False).reset_index(drop=True)
+    alarmResults.to_json(alarmPath,orient='records',force_ascii=False,indent=4)
+    return HTMLResponse(content="제출 완료")
+
 #데이터 설정
 class mk(BaseModel):
     mid : str
@@ -128,4 +138,4 @@ async def sendMail(response: mail):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app,host="0.0.0.0",port=8501)
+    uvicorn.run(app,host="0.0.0.0",port=8505)
