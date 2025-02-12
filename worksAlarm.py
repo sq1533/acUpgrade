@@ -60,7 +60,7 @@ class category:
                 newdata = [alarm for alarm in blink if alarm[0] in unique]
                 new = pd.DataFrame(data=newdata,columns=["Alarm","date","check"])
                 alarmAF = pd.concat([alarmBF,new],ignore_index=True)
-                alarmResults = alarmAF.sort_values(by='date',ascending=False).reset_index(drop=True)
+                alarmResults = alarmAF.groupby(by='check').apply(lambda x:x.sort_values(by='date',ascending=False)).reset_index(drop=True)
                 alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
             else:
                 pass
