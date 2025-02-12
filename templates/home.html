@@ -15,7 +15,7 @@
         </button>    
         <form class="col-start-2" hx-post="/allCheck" hx-target="#allResults" hx-swap="innerHTML" hx-boost="true">
             <button class="px-2 py-1 rounded-lg bg-green-300 font-bold text-black hover:bg-green-500" type="submit" name="check" value="특이사항 없음">특이사항 없음 일괄처리</button>
-            <div id="allResults"></div>
+            <div class="hidden" id="allResults"></div>
         </form>
     </div>
     <div id="bwGround" class="grid grid-cols-1 font-sans leading-normal space-y-3 bg-white">
