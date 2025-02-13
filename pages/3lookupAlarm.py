@@ -2,6 +2,16 @@ import os
 import pandas
 import streamlit as st
 
+css = '''
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 1rem;}
+    header {visibility: hidden;}
+    .streamlit-footer {display: none;}
+    .st-emotion-cache-uf99v8 {display: none;}
+</style>
+'''
+#상단 빈칸제거 및 사이드바 제거
+st.markdown(css,unsafe_allow_html=True)
 #AI_MON simple 알람 타켓
 nonePay = [':거래없음',':거래감소',':거래(성공건)없음']
 successDown = [':성공율 하락',':비정상환불',':비정상취소']

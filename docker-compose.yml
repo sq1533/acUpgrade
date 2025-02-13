@@ -1,0 +1,18 @@
+services:
+  streamlit:
+    image: mss_stramlit
+    volumes:
+      - ./DB:/app/DB:rw
+      - ./Alarm:/app/Alarm:rw
+    build: .
+    ports:
+      - "80:8501"
+    command: streamlit run home.py --server.port=8501
+  fastapi:
+    image: mss_fastapi
+    volumes:
+      - ./Alarm:/app/Alarm:rw
+    build: .
+    ports:
+      - "81:8502"
+    command: python main.py

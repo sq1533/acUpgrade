@@ -6,7 +6,14 @@ import clipboard
 import streamlit as st
 import streamlit.components.v1 as components
 
-from customs.custom import css
+css = '''
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 1rem;}
+    header {visibility: hidden;}
+    .streamlit-footer {display: none;}
+    .st-emotion-cache-uf99v8 {display: none;}
+</style>
+'''
 #상단 빈칸제거 및 사이드바 제거
 st.markdown(css,unsafe_allow_html=True)
 #데이터 불러오기
@@ -19,7 +26,7 @@ with open(loginPath, 'r', encoding="UTF-8") as f:
     login_DB = json.load(f)
 with open(sideBarPath,'r',encoding="UTF-8") as f:
     order = json.load(f)
-url = pd.Series(login_DB['IP'])['IP']+"/home"
+url = login_DB['IP']['IP']+"/home"
 def H_page() -> None:
     #조회기능
     midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})

@@ -6,9 +6,16 @@ import requests
 import streamlit as st
 from datetime import datetime
 
-from customs.custom import css
-#사이드바 제거
-st.markdown(css, unsafe_allow_html=True)
+css = '''
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 1rem;}
+    header {visibility: hidden;}
+    .streamlit-footer {display: none;}
+    .st-emotion-cache-uf99v8 {display: none;}
+</style>
+'''
+#상단 빈칸제거 및 사이드바 제거
+st.markdown(css,unsafe_allow_html=True)
 #메일 DB저장
 def sendMail():
     requests.post("http://127.0.0.1:8501/email",json.dumps(email))

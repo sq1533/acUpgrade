@@ -4,9 +4,16 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from customs.custom import css
-#사이드바 제거
-st.markdown(css, unsafe_allow_html=True)
+css = '''
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 1rem;}
+    header {visibility: hidden;}
+    .streamlit-footer {display: none;}
+    .st-emotion-cache-uf99v8 {display: none;}
+</style>
+'''
+#상단 빈칸제거 및 사이드바 제거
+st.markdown(css,unsafe_allow_html=True)
 #데이터 불러오기
 midInfoPath = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","DB","2midInfo.json")
 midInfo = pd.read_json(midInfoPath,orient="records",dtype={"mid":str,"info":str})

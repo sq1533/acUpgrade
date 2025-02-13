@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 import json
 import pandas as pd
 import time
@@ -8,6 +9,12 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
+
+#재시작 프로토콜
+def restart_script():
+    driver.quit()
+    subprocess.Popen([sys.executable] + sys.argv)
+    sys.exit()
 
 #로그인 정보 호출
 loginPath = os.path.join(os.path.dirname(__file__),"DB","1loginInfo.json")
@@ -60,7 +67,7 @@ class category:
                 newdata = [alarm for alarm in blink if alarm[0] in unique]
                 new = pd.DataFrame(data=newdata,columns=["Alarm","date","check"])
                 alarmAF = pd.concat([alarmBF,new],ignore_index=True)
-                alarmResults = alarmAF.groupby(by='check').apply(lambda x:x.sort_values(by='date',ascending=False)).reset_index(drop=True)
+                alarmResults = alarmAF.sort_values(by=['check','date'],ascending=[True, False]).groupby('check').head(len(alarmAF)).reset_index(drop=True)
                 alarmResults.to_json(path,orient='records',force_ascii=False,indent=4)
             else:
                 pass
@@ -88,15 +95,14 @@ def main():
             autoAlarm.newAlarm(driver,todayAlarmPath)
             if (time.time()-start_time) >= max_runtime:
                 time.sleep(1)
-                driver.quit()
-                os.execl(sys.executable, sys.executable, *sys.argv)
+                restart_script()
             else:
                 pass
         except Exception as ec:
             print(ec)
             driver.quit()
             time.sleep(1)
-            os.execl(sys.executable, sys.executable, *sys.argv)
+            restart_script()
     else:
         yesterday = now - datetime.timedelta(days=1)
         dropData = now - datetime.timedelta(days=2)
@@ -107,5 +113,9 @@ def main():
 
 if __name__ == "__main__":
     while True:
-        main()
-        time.sleep(0.1)
+        try:
+            main()
+            time.sleep(0.1)
+        except Exception as e:
+            print(e)
+            time.sleep(2)
