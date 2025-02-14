@@ -16,9 +16,7 @@ def ezMail(id:str,pw:str,botAPI:str,botID:str) -> None:
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
     options.add_argument('--disable-gpu')
-    options.add_argument("--disable-javascript")
     options.add_argument('--disable-extensions')
-    options.add_argument('--blink-settings=imagesEnabled=false')
     driver = webdriver.Chrome(options=options)
     url = "https://auth.worksmobile.com/login/login?accessUrl=https%3A%2F%2Fmail.worksmobile.com%2F"
     driver.get(url)
