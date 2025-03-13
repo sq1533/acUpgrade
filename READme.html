@@ -1,1 +1,39 @@
-![MSS 시스템 구동](https://github.com/sq1533/monitoringTotalSystems/blob/main/image.png)
+# alarmCapture-v2
+streamlit, fast API, selenium, bueatifulSoup, Pandas, docker
+
+## 구성
+* page/
+  * 1DBM.py
+  * 2autoMail.py
+  * 3lookupAlarm.py
+* subFunction/
+  * hotLineAuto.py
+  * worksMail.py
+* templates/
+  * home.html
+* Dockerfile
+* docker-compose.yml
+* database.py
+* home.py
+* main.py
+* worksAlarm.py
+* worksMail.py
+
+## 목적
+1. 팀원 간 업무의 정보 불균형 해소를 위한 실시간 알람 데이터 수집 및 mid정보 매칭 / 통합 화면 노출
+2. 기존 alarmCapture 성능 저하 문제 해소
+
+## 기대효과
+* Fast API의 API 송수신을 통한 빠른 피드백
+* HTMX의 AJAX 구축
+* docker를 통한 가상환경 배포
+* 동일 환경에서 테스트 서버, 운영 서버 구동 및 관리
+
+## 기능
+* selenium 웹 크롤링을 통한 신규 알람 텍스트 파일 수집
+* 알람 id 정제 및 midInfo.json 파일 mid와 매칭
+* Fast API 웹 서비스 구축 및 수집 알람 텍스트 노출
+* 매칭된 id의 정보 노출
+
+## 이미지 구성도
+![alarmCapture](https://github.com/sq1533/alarmCapture-v2-fastAPI_Streamlit/image.png)
